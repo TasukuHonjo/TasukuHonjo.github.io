@@ -3,13 +3,13 @@ body {
 	margin: 0;
 	padding: 0;
 	line-height: 1.6;
-	background: #fff;
+	background: #b5ff9c;
 	background-size: 40px 40px;
 }
 #outer {
 	margin: 0 auto;
 	width: 1000px;
-	background-color: #fff;
+	background-color: #ffff8c;
 }
 header {
 	height: 80px;
