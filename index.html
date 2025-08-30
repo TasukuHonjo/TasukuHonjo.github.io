@@ -3,34 +3,201 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tasuku Honjo - Portfolio</title>
-  <link rel="stylesheet" href="style.css">
+  <title>HONJO VISION</title>
+  <style>
+    /* リセット */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* 背景動画 */
+    #bg-video {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    /* 暗めオーバーレイ */
+    .overlay {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: -1;
+    }
+
+    /* ナビゲーション */
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem 0;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.1);
+      z-index: 10;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff;
+    }
+
+    /* ヒーロー */
+    header {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 4rem;
+      background: linear-gradient(90deg, #ff00ff, #00ffff, #ffcc00);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientMove 6s infinite alternate;
+      text-shadow: 0 0 20px rgba(255,255,255,0.5);
+    }
+
+    header p {
+      margin-top: 1rem;
+      font-size: 1.5rem;
+      opacity: 0.8;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    /* セクション */
+    section {
+      padding: 5rem 2rem;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease;
+    }
+    section.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 15px rgba(0,255,255,0.8);
+    }
+
+    .card-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: 15px;
+      width: 250px;
+      transition: transform 0.4s, box-shadow 0.4s;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(0,255,255,0.4);
+    }
+
+    footer {
+      padding: 2rem;
+      text-align: center;
+      background: rgba(0,0,0,0.7);
+      margin-top: 3rem;
+    }
+  </style>
 </head>
 <body>
-  <!-- ヒーローセクション -->
-  <section class="hero">
-    <div class="hero-text">
-      <h1 class="fade-in">Welcome to My Website</h1>
-      <p class="fade-in delay">クリエイティブとテクノロジーで未来をつくる</p>
+  <!-- 背景動画 -->
+  <video autoplay muted loop id="bg-video">
+    <source src="https://cdn.coverr.co/videos/coverr-a-river-in-the-woods-9642/1080p.mp4" type="video/mp4">
+  </video>
+  <div class="overlay"></div>
+
+  <!-- ナビ -->
+  <nav>
+    <a href="#about">About</a>
+    <a href="#works">Works</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- ヒーロー -->
+  <header>
+    <h1>HONJO VISION</h1>
+    <p>未来をデザインするポートフォリオサイト</p>
+  </header>
+
+  <!-- About -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>ここに自己紹介文を書いてください。<br>ゲーム開発、Web制作、アルゴイズムの探求など。</p>
+  </section>
+
+  <!-- Works -->
+  <section id="works">
+    <h2>My Works</h2>
+    <div class="card-container">
+      <div class="card">🎮 ゲーム開発</div>
+      <div class="card">💻 Web制作</div>
+      <div class="card">📖 プロジェクト研究</div>
     </div>
   </section>
 
-  <!-- コンテンツセクション -->
-  <section class="content fade-scroll">
-    <h2>About Me</h2>
-    <p>ここに自己紹介や活動内容を書きます。</p>
-  </section>
-
-  <section class="content fade-scroll">
-    <h2>Projects</h2>
-    <p>制作物の紹介やリンクを載せると良いです。</p>
-  </section>
-
-  <section class="content fade-scroll">
+  <!-- Contact -->
+  <section id="contact">
     <h2>Contact</h2>
-    <p>Twitterやメールアドレスをここに。</p>
+    <p>X（Twitter）やメールアドレスをここに記載してください。</p>
   </section>
 
-  <script src="script.js"></script>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Tasuku Honjo</p>
+  </footer>
+
+  <script>
+    // スクロール時にフェードイン
+    const sections = document.querySelectorAll("section");
+    const showOnScroll = () => {
+      sections.forEach(sec => {
+        const rect = sec.getBoundingClientRect();
+        if(rect.top < window.innerHeight - 100) {
+          sec.classList.add("show");
+        }
+      });
+    };
+    window.addEventListener("scroll", showOnScroll);
+    showOnScroll();
+  </script>
 </body>
 </html>
