@@ -217,10 +217,10 @@ let height = canvas.height = window.innerHeight;
 
 const particles = [];
 const particleCount = 100;
-let mouse = { x: width/2, y: height/2 };
 
 function random(min,max){ return Math.random()*(max-min)+min; }
 
+// パーティクル初期化
 for(let i=0;i<particleCount;i++){
   particles.push({
     x: random(0,width),
@@ -231,41 +231,25 @@ for(let i=0;i<particleCount;i++){
   });
 }
 
-// マウス座標
-window.addEventListener('mousemove', e => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
-
 function animate(){
   ctx.clearRect(0,0,width,height);
 
   // パーティクル更新
   for(let p of particles){
-    // 浮遊
     p.x += p.dx;
     p.y += p.dy;
+
     if(p.x < 0 || p.x > width) p.dx *= -1;
     if(p.y < 0 || p.y > height) p.dy *= -1;
-
-    // マウス引き寄せ
-    const dx = mouse.x - p.x;
-    const dy = mouse.y - p.y;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-    if(dist < 150){
-      const force = (150 - dist) / 150;
-      p.x += dx * 0.02 * force;
-      p.y += dy * 0.02 * force;
-    }
   }
 
-  // 線で接続
+  // パーティクル同士を線で接続
   for(let i=0; i<particles.length; i++){
     for(let j=i+1; j<particles.length; j++){
       const dx = particles[i].x - particles[j].x;
       const dy = particles[i].y - particles[j].y;
       const dist = Math.sqrt(dx*dx + dy*dy);
-      if(dist < 120){ // 線を引く距離の上限
+      if(dist < 120){
         ctx.beginPath();
         ctx.moveTo(particles[i].x, particles[i].y);
         ctx.lineTo(particles[j].x, particles[j].y);
@@ -288,11 +272,13 @@ function animate(){
 }
 animate();
 
+// リサイズ対応
 window.addEventListener('resize',()=>{
   width = canvas.width = window.innerWidth;
   height = canvas.height = window.innerHeight;
 });
 </script>
+
 
 
 
