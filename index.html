@@ -231,6 +231,27 @@ for(let i=0;i<particleCount;i++){
   });
 }
 
+// pointer座標
+let pointer = { x: width/2, y: height/2 };
+let enablePointer = window.innerWidth >= 768; // PCならマウス、スマホならタッチ
+
+// マウス座標更新（PC用）
+if(enablePointer){
+  window.addEventListener('mousemove', e => {
+    pointer.x = e.clientX;
+    pointer.y = e.clientY;
+  });
+}
+
+// タッチ座標更新（スマホ用）
+else {
+  window.addEventListener('touchmove', e => {
+    const touch = e.touches[0];
+    pointer.x = touch.clientX;
+    pointer.y = touch.clientY;
+  }, {passive:true});
+}
+
 function animate(){
   ctx.clearRect(0,0,width,height);
 
@@ -241,11 +262,23 @@ function animate(){
 
     if(p.x < 0 || p.x > width) p.dx *= -1;
     if(p.y < 0 || p.y > height) p.dy *= -1;
+
+    // pointerへの引き寄せ（PC/スマホ共通）
+    if(pointer){
+      const dx = pointer.x - p.x;
+      const dy = pointer.y - p.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist < 150){
+        const force = (150 - dist) / 150;
+        p.x += dx * 0.02 * force;
+        p.y += dy * 0.02 * force;
+      }
+    }
   }
 
   // パーティクル同士を線で接続
-  for(let i=0; i<particles.length; i++){
-    for(let j=i+1; j<particles.length; j++){
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
       const dx = particles[i].x - particles[j].x;
       const dy = particles[i].y - particles[j].y;
       const dist = Math.sqrt(dx*dx + dy*dy);
@@ -270,14 +303,18 @@ function animate(){
 
   requestAnimationFrame(animate);
 }
+
 animate();
 
 // リサイズ対応
 window.addEventListener('resize',()=>{
   width = canvas.width = window.innerWidth;
   height = canvas.height = window.innerHeight;
+  enablePointer = window.innerWidth >= 768;
+  pointer = { x: width/2, y: height/2 };
 });
 </script>
+
 
 
 
