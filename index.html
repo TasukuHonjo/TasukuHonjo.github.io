@@ -15,11 +15,33 @@
 <h1>あなたのＨＰタイトル</h1>
 <p>あなたのＨＰの説明文</p>
 </div>
+<!-- アクセスカウンター追加 -->
+<p id="accessCount">このサイトへのアクセス回数: 0</p>
+<script>
+let accessCount = Number(localStorage.getItem('accessCount')) || 0;
+accessCount++;
+localStorage.setItem('accessCount', accessCount);
+document.getElementById('accessCount').textContent = 'このサイトへのアクセス回数: ' + accessCount;
+</script>
+<!-- ここまで追加 -->
 </header>
 <div id="content">
 <div class="inner">
 <h2>記事ページ見出し・大</h2>
 <p>文章あれこれ</p>
+
+<!-- ここから追加 -->
+<button id="showTimeBtn">現在の時間を表示</button>
+<p id="currentTime"></p>
+<script>
+document.getElementById('showTimeBtn').onclick = function() {
+    const now = new Date();
+    const formatted = now.toLocaleString('ja-JP', { hour12: false });
+    document.getElementById('currentTime').textContent = '現在の時間: ' + formatted;
+};
+</script>
+<!-- ここまで追加 -->
+
 <h3>記事ページ見出し・中</h3>
 <p>文章あれこれ</p>
 <h4>記事ページ見出し・小</h4>
@@ -29,10 +51,24 @@
 <div class="left-title">サイドバータイトル</div>
 <div class="link">
 <ul>
-<li>記事ページへのリンク</li>
-<li>記事ページへのリンク</li>
+<li><a href="#" class="count-link">記事ページへのリンク</a></li>
+<li><a href="#" class="count-link">記事ページへのリンク</a></li>
 </ul>
+<!-- カウント表示を追加 -->
+<p id="linkCount">リンクがクリックされた回数: 0</p>
 </div>
+<script>
+let linkClickCount = Number(localStorage.getItem('linkClickCount')) || 0;
+document.getElementById('linkCount').textContent = 'リンクがクリックされた回数: ' + linkClickCount;
+
+document.querySelectorAll('.count-link').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+        linkClickCount++;
+        localStorage.setItem('linkClickCount', linkClickCount);
+        document.getElementById('linkCount').textContent = 'リンクがクリックされた回数: ' + linkClickCount;
+    });
+});
+</script>
 </aside>
 </div>
 <footer>© 2010 あなたのホームページ</footer>
