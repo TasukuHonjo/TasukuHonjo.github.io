@@ -1,114 +1,139 @@
-/* 全体設定 */
+/* ===== リセット ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  margin: 0;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #fff;
-  background: #111;
   overflow-x: hidden;
+  background: #111;
 }
 
-/* ヒーローセクション */
-.hero {
+/* ===== 背景パーティクル ===== */
+canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -2;
+}
+
+/* ===== 半透明オーバーレイ ===== */
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: -1;
+}
+
+/* ===== ナビ ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem 0;
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.1);
+  z-index: 10;
+}
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+nav a:hover {
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff;
+}
+
+/* ===== ヒーローセクション ===== */
+header {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: url('https://source.unsplash.com/1600x900/?technology,dark') no-repeat center center/cover;
-  position: relative;
 }
-
-.hero::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5);
+header h1 {
+  font-size: 4rem;
+  text-shadow: 0 0 20px rgba(0,255,255,0.5);
 }
-
-/* ヒーローテキスト */
-.hero-text {
-  position: relative;
-  z-index: 1;
-}
-
-h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: #fff;
+header p {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  opacity: 0.8;
   text-shadow: 0 0 10px rgba(0,0,0,0.7);
 }
 
-p {
-  font-size: 1.2rem;
-  color: #fff;
-  text-shadow: 0 0 10px rgba(0,0,0,0.7);
-}
-
-/* セクション */
-.content {
-  padding: 80px 20px;
+/* ===== セクション ===== */
+section {
+  padding: 5rem 2rem;
   text-align: center;
-  max-width: 800px;
-  margin: auto;
-}
-
-/* フェードインアニメーション */
-.fade-in {
   opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 1.5s forwards;
+  transform: translateY(40px);
+  transition: all 1s ease;
+}
+section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 15px rgba(0,255,255,0.8);
 }
 
-.fade-in.delay {
-  animation-delay: 0.5s;
+/* ===== カード ===== */
+.card-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 15px;
+  width: 250px;
+  transition: transform 0.4s, box-shadow 0.4s;
+  cursor: pointer;
+}
+.card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0,255,255,0.4);
 }
 
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ===== フッター ===== */
+footer {
+  padding: 2rem;
+  text-align: center;
+  background: rgba(0,0,0,0.7);
+  margin-top: 3rem;
 }
 
-/* スクロールフェード */
+/* ===== スクロールフェードイン ===== */
 .fade-scroll {
   opacity: 0;
   transform: translateY(20px);
   transition: all 1s ease-out;
 }
-
 .fade-scroll.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-#bg-video {
-  position: fixed;   /* 画面全体に固定 */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* 画面全体に拡大して表示 */
-  z-index: -2;       /* 本文より背面にする */
+/* ===== その他 ===== */
+h3 {
+  font-size: 0.85rem;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.775);
 }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4); /* 半透明黒で文字が見やすくなる */
-  z-index: -1; /* 動画の上だけど本文より下 */
-}
-
-header h1 {
-  font-size: 4rem;
-  background: linear-gradient(90deg, hsl(0,100%,60%), hsl(60,100%,60%), hsl(120,100%,60%), hsl(180,100%,60%), hsl(240,100%,60%), hsl(300,100%,60%), hsl(360,100%,60%));
-  background-size: 600% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientMove 8s linear infinite;
-  text-shadow: 0 0 20px rgba(255,255,255,0.6);
+h4 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.775);
 }
