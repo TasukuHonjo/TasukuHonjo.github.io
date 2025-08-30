@@ -102,3 +102,13 @@ p {
   background: rgba(0,0,0,0.4); /* 半透明黒で文字が見やすくなる */
   z-index: -1; /* 動画の上だけど本文より下 */
 }
+
+header h1 {
+  font-size: 4rem;
+  background: linear-gradient(90deg, hsl(0,100%,60%), hsl(60,100%,60%), hsl(120,100%,60%), hsl(180,100%,60%), hsl(240,100%,60%), hsl(300,100%,60%), hsl(360,100%,60%));
+  background-size: 600% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientMove 8s linear infinite;
+  text-shadow: 0 0 20px rgba(255,255,255,0.6);
+}

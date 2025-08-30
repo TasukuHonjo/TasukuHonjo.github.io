@@ -1,158 +1,144 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HONJO VISION</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HONJO VISION</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 
-  <style>
-    /* ===== リセット ===== */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #fff;
-      overflow-x: hidden;
-      background: #111;
-    }
+<style>
+  /* ===== リセット ===== */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    overflow-x: hidden;
+    background: #111;
+  }
 
-    /* ===== 背景動画 ===== */
-    #bg-video {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -2;
-    }
+  /* ===== 背景パーティクル ===== */
+  canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -2;
+  }
 
-    /* ===== 半透明オーバーレイ ===== */
-    .overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: -1;
-    }
+  /* ===== 半透明オーバーレイ ===== */
+  .overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: -1;
+  }
 
-    /* ===== ナビ ===== */
-    nav {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      padding: 1rem 0;
-      backdrop-filter: blur(10px);
-      background: rgba(255,255,255,0.1);
-      z-index: 10;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-    nav a:hover {
-      color: #0ff;
-      text-shadow: 0 0 10px #0ff;
-    }
+  /* ===== ナビ ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem 0;
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.1);
+    z-index: 10;
+  }
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  nav a:hover {
+    color: #0ff;
+    text-shadow: 0 0 10px #0ff;
+  }
 
-    /* ===== ヒーローセクション ===== */
-    header {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-    header h1 {
-      font-size: 4rem;
-      background: linear-gradient(90deg, #ff00ff, #00ffff, #ffcc00);
-      background-size: 300% 300%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientMove 6s infinite alternate;
-      text-shadow: 0 0 20px rgba(255,255,255,0.5);
-    }
-    header p {
-      margin-top: 1rem;
-      font-size: 1.5rem;
-      opacity: 0.8;
-      text-shadow: 0 0 10px rgba(0,0,0,0.7);
-    }
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
-    }
+  /* ===== ヒーローセクション ===== */
+  header {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  header h1 {
+    font-size: 4rem;
+    text-shadow: 0 0 20px rgba(0,255,255,0.5);
+  }
+  header p {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    opacity: 0.8;
+    text-shadow: 0 0 10px rgba(0,0,0,0.7);
+  }
 
-    /* ===== セクション ===== */
-    section {
-      padding: 5rem 2rem;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s ease;
-    }
-    section.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    h2 {
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-      text-shadow: 0 0 15px rgba(0,255,255,0.8);
-    }
+  /* ===== セクション ===== */
+  section {
+    padding: 5rem 2rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s ease;
+  }
+  section.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 15px rgba(0,255,255,0.8);
+  }
 
-    /* ===== カード ===== */
-    .card-container {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
-    .card {
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      padding: 2rem;
-      border-radius: 15px;
-      width: 250px;
-      transition: transform 0.4s, box-shadow 0.4s;
-      cursor: pointer;
-    }
-    .card:hover {
-      transform: translateY(-10px) scale(1.05);
-      box-shadow: 0 20px 40px rgba(0,255,255,0.4);
-    }
+  /* ===== カード ===== */
+  .card-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 15px;
+    width: 250px;
+    transition: transform 0.4s, box-shadow 0.4s;
+    cursor: pointer;
+  }
+  .card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0,255,255,0.4);
+  }
 
-    /* ===== フッター ===== */
-    footer {
-      padding: 2rem;
-      text-align: center;
-      background: rgba(0,0,0,0.7);
-      margin-top: 3rem;
-    }
+  /* ===== フッター ===== */
+  footer {
+    padding: 2rem;
+    text-align: center;
+    background: rgba(0,0,0,0.7);
+    margin-top: 3rem;
+  }
 
-    /* ===== スクロールフェードイン ===== */
-    .fade-scroll {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 1s ease-out;
-    }
-    .fade-scroll.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
+  /* ===== スクロールフェードイン ===== */
+  .fade-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease-out;
+  }
+  .fade-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
 </head>
 <body>
-  <!-- 背景動画 -->
-  <video autoplay muted loop id="bg-video">
-    <source src="videos/background.mp4" type="video/mp4">
-  </video>
-  <!-- オーバーレイ -->
+  <!-- 背景パーティクル -->
+  <canvas id="bg"></canvas>
   <div class="overlay"></div>
 
   <!-- ナビ -->
@@ -165,7 +151,7 @@
   <!-- ヒーロー -->
   <header>
     <h1>HONJO VISION</h1>
-    <p>未来をデザインするポートフォリオサイト</p>
+    <p>新たな価値のクリエイトを目指して</p>
   </header>
 
   <!-- About -->
@@ -209,5 +195,64 @@
     window.addEventListener("scroll", showOnScroll);
     showOnScroll();
   </script>
+
+  <!-- ===== ネオン文字色アニメ ===== -->
+  <script>
+    const title = document.querySelector("header h1");
+    let hue = 0;
+    function animateHue() {
+      hue = (hue + 1) % 360;
+      title.style.color = `hsl(${hue}, 100%, 60%)`;
+      requestAnimationFrame(animateHue);
+    }
+    animateHue();
+  </script>
+
+  <!-- ===== パーティクルJS ===== -->
+  <script>
+    const canvas = document.getElementById('bg');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    const particles = [];
+    const particleCount = 100;
+
+    function random(min,max){ return Math.random()*(max-min)+min; }
+
+    for(let i=0;i<particleCount;i++){
+      particles.push({
+        x: random(0,width),
+        y: random(0,height),
+        r: random(1,3),
+        dx: random(-0.5,0.5),
+        dy: random(-0.5,0.5)
+      });
+    }
+
+    function animate(){
+      ctx.clearRect(0,0,width,height);
+      for(let p of particles){
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if(p.x < 0 || p.x > width) p.dx *= -1;
+        if(p.y < 0 || p.y > height) p.dy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle = '#0ff';
+        ctx.fill();
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener('resize',()=>{
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+  </script>
+
 </body>
 </html>
