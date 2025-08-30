@@ -4,41 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HONJO VISION</title>
-
-  <!-- サイトアイコン -->
   <link rel="icon" href="favicon.ico" type="image/x-icon">
 
   <style>
-    /* リセット */
+    /* ===== リセット ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #fff;
       overflow-x: hidden;
+      background: #111;
     }
 
-    /* 背景動画 */
+    /* ===== 背景動画 ===== */
     #bg-video {
       position: fixed;
-      right: 0;
-      bottom: 0;
-      min-width: 100%;
-      min-height: 100%;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       z-index: -2;
     }
 
-    /* 暗めオーバーレイ */
+    /* ===== 半透明オーバーレイ ===== */
     .overlay {
       position: fixed;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
       z-index: -1;
     }
 
-    /* ナビゲーション */
+    /* ===== ナビ ===== */
     nav {
       position: fixed;
       top: 0; left: 0;
@@ -51,7 +48,6 @@
       background: rgba(255,255,255,0.1);
       z-index: 10;
     }
-
     nav a {
       color: #fff;
       text-decoration: none;
@@ -63,7 +59,7 @@
       text-shadow: 0 0 10px #0ff;
     }
 
-    /* ヒーロー */
+    /* ===== ヒーローセクション ===== */
     header {
       height: 100vh;
       display: flex;
@@ -72,7 +68,6 @@
       align-items: center;
       text-align: center;
     }
-
     header h1 {
       font-size: 4rem;
       background: linear-gradient(90deg, #ff00ff, #00ffff, #ffcc00);
@@ -82,19 +77,18 @@
       animation: gradientMove 6s infinite alternate;
       text-shadow: 0 0 20px rgba(255,255,255,0.5);
     }
-
     header p {
       margin-top: 1rem;
       font-size: 1.5rem;
       opacity: 0.8;
+      text-shadow: 0 0 10px rgba(0,0,0,0.7);
     }
-
     @keyframes gradientMove {
       0% { background-position: 0% 50%; }
       100% { background-position: 100% 50%; }
     }
 
-    /* セクション */
+    /* ===== セクション ===== */
     section {
       padding: 5rem 2rem;
       text-align: center;
@@ -106,20 +100,19 @@
       opacity: 1;
       transform: translateY(0);
     }
-
     h2 {
       font-size: 2.5rem;
       margin-bottom: 2rem;
       text-shadow: 0 0 15px rgba(0,255,255,0.8);
     }
 
+    /* ===== カード ===== */
     .card-container {
       display: flex;
       justify-content: center;
       gap: 2rem;
       flex-wrap: wrap;
     }
-
     .card {
       background: rgba(255,255,255,0.1);
       backdrop-filter: blur(10px);
@@ -134,19 +127,32 @@
       box-shadow: 0 20px 40px rgba(0,255,255,0.4);
     }
 
+    /* ===== フッター ===== */
     footer {
       padding: 2rem;
       text-align: center;
       background: rgba(0,0,0,0.7);
       margin-top: 3rem;
     }
+
+    /* ===== スクロールフェードイン ===== */
+    .fade-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 1s ease-out;
+    }
+    .fade-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
   <!-- 背景動画 -->
   <video autoplay muted loop id="bg-video">
-    <source src="https://cdn.coverr.co/videos/coverr-a-river-in-the-woods-9642/1080p.mp4" type="video/mp4">
+    <source src="videos/background.mp4" type="video/mp4">
   </video>
+  <!-- オーバーレイ -->
   <div class="overlay"></div>
 
   <!-- ナビ -->
@@ -163,13 +169,13 @@
   </header>
 
   <!-- About -->
-  <section id="about">
+  <section id="about" class="fade-scroll">
     <h2>About Me</h2>
     <p>ここに自己紹介文を書いてください。<br>ゲーム開発、Web制作、アルゴイズムの探求など。</p>
   </section>
 
   <!-- Works -->
-  <section id="works">
+  <section id="works" class="fade-scroll">
     <h2>My Works</h2>
     <div class="card-container">
       <div class="card">🎮 ゲーム開発</div>
@@ -179,24 +185,24 @@
   </section>
 
   <!-- Contact -->
-  <section id="contact">
+  <section id="contact" class="fade-scroll">
     <h2>Contact</h2>
     <p>X（Twitter）やメールアドレスをここに記載してください。</p>
   </section>
 
   <!-- Footer -->
   <footer>
-    <p> 2025 Honjoまとめ</p>
+    <p>2025 Honjoまとめ</p>
   </footer>
 
+  <!-- ===== スクロールフェードインJS ===== -->
   <script>
-    // スクロール時にフェードイン
-    const sections = document.querySelectorAll("section");
+    const sections = document.querySelectorAll(".fade-scroll");
     const showOnScroll = () => {
       sections.forEach(sec => {
         const rect = sec.getBoundingClientRect();
         if(rect.top < window.innerHeight - 100) {
-          sec.classList.add("show");
+          sec.classList.add("visible");
         }
       });
     };
