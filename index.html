@@ -150,7 +150,7 @@
 
   <!-- ヒーロー -->
   <header>
-    <h1>HONJO VISION</h1>
+    <h1>HONJO ACTIVITY</h1>
     <p>新たな価値のクリエイトを目指して</p>
   </header>
 
@@ -209,50 +209,92 @@
   </script>
 
   <!-- ===== パーティクルJS ===== -->
-  <script>
-    const canvas = document.getElementById('bg');
-    const ctx = canvas.getContext('2d');
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
+<script>
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
 
-    const particles = [];
-    const particleCount = 100;
+const particles = [];
+const particleCount = 100;
+let mouse = { x: width/2, y: height/2 };
 
-    function random(min,max){ return Math.random()*(max-min)+min; }
+function random(min,max){ return Math.random()*(max-min)+min; }
 
-    for(let i=0;i<particleCount;i++){
-      particles.push({
-        x: random(0,width),
-        y: random(0,height),
-        r: random(1,3),
-        dx: random(-0.5,0.5),
-        dy: random(-0.5,0.5)
-      });
+for(let i=0;i<particleCount;i++){
+  particles.push({
+    x: random(0,width),
+    y: random(0,height),
+    r: random(1,3),
+    dx: random(-0.5,0.5),
+    dy: random(-0.5,0.5)
+  });
+}
+
+// マウス座標
+window.addEventListener('mousemove', e => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+
+function animate(){
+  ctx.clearRect(0,0,width,height);
+
+  // パーティクル更新
+  for(let p of particles){
+    // 浮遊
+    p.x += p.dx;
+    p.y += p.dy;
+    if(p.x < 0 || p.x > width) p.dx *= -1;
+    if(p.y < 0 || p.y > height) p.dy *= -1;
+
+    // マウス引き寄せ
+    const dx = mouse.x - p.x;
+    const dy = mouse.y - p.y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    if(dist < 150){
+      const force = (150 - dist) / 150;
+      p.x += dx * 0.02 * force;
+      p.y += dy * 0.02 * force;
     }
+  }
 
-    function animate(){
-      ctx.clearRect(0,0,width,height);
-      for(let p of particles){
-        p.x += p.dx;
-        p.y += p.dy;
-
-        if(p.x < 0 || p.x > width) p.dx *= -1;
-        if(p.y < 0 || p.y > height) p.dy *= -1;
-
+  // 線で接続
+  for(let i=0; i<particles.length; i++){
+    for(let j=i+1; j<particles.length; j++){
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist < 120){ // 線を引く距離の上限
         ctx.beginPath();
-        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fillStyle = '#0ff';
-        ctx.fill();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(0,255,255,${1 - dist/120})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
       }
-      requestAnimationFrame(animate);
     }
-    animate();
+  }
 
-    window.addEventListener('resize',()=>{
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    });
-  </script>
+  // パーティクル描画
+  for(let p of particles){
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle = '#0ff';
+    ctx.fill();
+  }
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+window.addEventListener('resize',()=>{
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+});
+</script>
+
+
 
 </body>
 </html>
