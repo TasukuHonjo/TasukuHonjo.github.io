@@ -1,77 +1,36 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<title>あなたのＨＰタイトル</title>
-<meta name="keywords" content="ページのキーワードA,B,C">
-<meta name="description" content="ページの説明">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasuku Honjo - Portfolio</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="outer">
-<header>
-<div class="header-inner">
-<h1>あなたのＨＰタイトル</h1>
-<p>あなたのＨＰの説明文</p>
-</div>
-<!-- アクセスカウンター追加 -->
-<p id="accessCount">このサイトへのアクセス回数: 0</p>
-<script>
-let accessCount = Number(localStorage.getItem('accessCount')) || 0;
-accessCount++;
-localStorage.setItem('accessCount', accessCount);
-document.getElementById('accessCount').textContent = 'このサイトへのアクセス回数: ' + accessCount;
-</script>
-<!-- ここまで追加 -->
-</header>
-<div id="content">
-<div class="inner">
-<h2>記事ページ見出し・大</h2>
-<p>文章あれこれ</p>
+  <!-- ヒーローセクション -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1 class="fade-in">Welcome to My Website</h1>
+      <p class="fade-in delay">クリエイティブとテクノロジーで未来をつくる</p>
+    </div>
+  </section>
 
-<!-- ここから追加 -->
-<button id="showTimeBtn">現在の時間を表示</button>
-<p id="currentTime"></p>
-<script>
-document.getElementById('showTimeBtn').onclick = function() {
-    const now = new Date();
-    const formatted = now.toLocaleString('ja-JP', { hour12: false });
-    document.getElementById('currentTime').textContent = '現在の時間: ' + formatted;
-};
-</script>
-<!-- ここまで追加 -->
+  <!-- コンテンツセクション -->
+  <section class="content fade-scroll">
+    <h2>About Me</h2>
+    <p>ここに自己紹介や活動内容を書きます。</p>
+  </section>
 
-<h3>記事ページ見出し・中</h3>
-<p>文章あれこれ</p>
-<h4>記事ページ見出し・小</h4>
-<p>文章あれこれ</p>
-</div>
-<aside>
-<div class="left-title">サイドバータイトル</div>
-<div class="link">
-<ul>
-<li><a href="#" class="count-link">記事ページへのリンク</a></li>
-<li><a href="#" class="count-link">記事ページへのリンク</a></li>
-</ul>
-<!-- カウント表示を追加 -->
-<p id="linkCount">リンクがクリックされた回数: 0</p>
-</div>
-<script>
-let linkClickCount = Number(localStorage.getItem('linkClickCount')) || 0;
-document.getElementById('linkCount').textContent = 'リンクがクリックされた回数: ' + linkClickCount;
+  <section class="content fade-scroll">
+    <h2>Projects</h2>
+    <p>制作物の紹介やリンクを載せると良いです。</p>
+  </section>
 
-document.querySelectorAll('.count-link').forEach(function(link) {
-    link.addEventListener('click', function(e) {
-        linkClickCount++;
-        localStorage.setItem('linkClickCount', linkClickCount);
-        document.getElementById('linkCount').textContent = 'リンクがクリックされた回数: ' + linkClickCount;
-    });
-});
-</script>
-</aside>
-</div>
-<footer>2025 本庄の活動</footer>
-</div>
+  <section class="content fade-scroll">
+    <h2>Contact</h2>
+    <p>Twitterやメールアドレスをここに。</p>
+  </section>
+
+  <script src="script.js"></script>
 </body>
 </html>
