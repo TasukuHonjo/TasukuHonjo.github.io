@@ -1,5 +1,5 @@
 // ===== スクロールでフェードイン =====
-const sections = document.querySelectorAll(".fade-scroll");
+const sections =  document.querySelectorAll(".fade-scroll, .fade-left, .fade-right");
 function showOnScroll() {
   sections.forEach(sec => {
     const rect = sec.getBoundingClientRect();
@@ -118,3 +118,4 @@ window.addEventListener('resize', () => {
   enablePointer = window.innerWidth >= 768;
   pointer = { x: width / 2, y: height / 2 };
 });
+

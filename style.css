@@ -126,6 +126,26 @@ footer {
   transform: translateY(0);
 }
 
+/* 横からフェードイン */
+.fade-left, .fade-right {
+  opacity: 0;
+  transition: all 1s ease-out;
+}
+
+.fade-left {
+  transform: translateX(-40px);
+}
+.fade-right {
+  transform: translateX(40px);
+}
+
+.fade-left.visible,
+.fade-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
 /* ===== その他 ===== */
 h3 {
   font-size: 0.85rem;
