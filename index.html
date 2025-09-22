@@ -1,61 +1,126 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>本庄のポートフォリオ</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Honjo Tasuku — Portfolio</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- 背景パーティクル -->
-  <canvas id="bg"></canvas>
-  <div class="overlay"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- ナビ -->
-  <nav>
-    <a href="#about">About</a>
-    <a href="#works">Works</a>
-    <a href="#contact">Contact</a>
-  </nav>
+  <!-- 泡キャンバス -->
+  <canvas id="bubbles" aria-hidden="true"></canvas>
 
-  <!-- ヒーロー -->
-  <header>
-    <h1>HONJO ACTIVITY</h1>
-    <p>新たな価値のクリエイトを目指して</p>
+  <!-- 固定背景レイヤー（ハイボール感） -->
+  <div class="bg-layer" aria-hidden="true"></div>
+
+  <!-- ヘッダー / ナビ -->
+  <header class="site-header" role="banner">
+    <nav class="nav" role="navigation" aria-label="Main">
+      <a class="nav-logo" href="index.html">HONJO ACTIVITY</a>
+      <ul class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="works.html">Works</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <!-- About -->
-  <section id="about" class="fade-left">
-    <h2>About Me</h2>
-    <h3>ホンジョウ</h3>  
-    <h4>本庄</h4>
-    <p>Osaka 27卒 ゲームプランナー志望<br>ゲーム企画・開発、チーム運用など。<br>色々なことに挑戦していこうと考えています。 </p>
-  </section>
+  <main id="main" class="container" role="main">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-inner">
+        <h1 id="hero-title">Honjo Tasuku</h1>
+        <p class="hero-sub">Game creator・Portfolio — Highball motif</p>
+        <p class="hero-cta">
+          <a class="btn" href="works.html">View Works</a>
+          <a class="btn ghost" href="#contact">Contact</a>
+        </p>
+      </div>
+    </section>
 
+    <!-- About -->
+    <section id="about" class="panel fade-left" aria-labelledby="about-title">
+      <h2 id="about-title">About Me</h2>
+      <div class="grid">
+        <div class="card profile">
+          <img src="https://placehold.jp/400x400.png" alt="写真（プレースホルダ）" class="profile-photo">
+        </div>
+        <div>
+          <p><strong>本庄 佑</strong>（HAL大阪） — ゲームプランナー志望。Unity / C# を用いたプロトタイプ制作やシステム設計が得意。アルゴイズム（Algorithmism）というコンセプトの研究も行っています。</p>
+          <ul class="meta-list">
+            <li><strong>School:</strong> HAL Osaka</li>
+            <li><strong>Age:</strong> 21</li>
+            <li><strong>Contact:</strong> <a href="mailto:you@example.com">you@example.com</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-  <!-- Works -->
-  <section id="works" class="fade-right">
-    <h2>My Works</h2>
-    <div class="card-container">
-      <div class="card">🎮 ゲーム開発</div>
-      <div class="card">💻 Web制作</div>
-      <div class="card">📖 プロジェクト研究</div>
-    </div>
-  </section>
+    <!-- Skills -->
+    <section id="skills" class="panel fade-scroll" aria-labelledby="skills-title">
+      <h2 id="skills-title">Skills</h2>
+      <div class="skill-grid">
+        <div class="skill">
+          <h3>Game Dev</h3>
+          <p>Unity / C# / Gameplay Design / Prototyping</p>
+        </div>
+        <div class="skill">
+          <h3>Web</h3>
+          <p>HTML / CSS / JavaScript / Live2D（導入）</p>
+        </div>
+        <div class="skill">
+          <h3>Tools</h3>
+          <p>Git / Blender / Photoshop / Figma</p>
+        </div>
+      </div>
+    </section>
 
-  <!-- Contact -->
-  <section id="contact" class="fade-scroll">
-    <h2>Contact</h2>
-    <p>X（Twitter）やメールアドレスをここに記載してください。</p>
-  </section>
+    <!-- Works preview -->
+    <section id="works-preview" class="panel fade-scroll" aria-labelledby="works-preview-title">
+      <h2 id="works-preview-title">Selected Works</h2>
+      <div class="card-row">
+        <article class="work-card" role="article" aria-labelledby="w1">
+          <a href="work-detail.html?slug=sample1" class="work-thumb" aria-hidden="true">
+            <img src="https://placehold.jp/480x270.png" alt="">
+          </a>
+          <h3 id="w1">Algorithmism — Card Prototype</h3>
+          <p>カードでアルゴリズムを並び替えるミニゲーム。準備フェーズ / 実行フェーズの設計を担当。</p>
+          <p><a class="link" href="work-detail.html?slug=sample1">Detail →</a></p>
+        </article>
 
-  <!-- Footer -->
-  <footer>
-    <p>2025 Honjoまとめ</p>
+        <article class="work-card" role="article" aria-labelledby="w2">
+          <a href="work-detail.html?slug=sample2" class="work-thumb" aria-hidden="true">
+            <img src="https://placehold.jp/480x270.png" alt="">
+          </a>
+          <h3 id="w2">Portfolio Site (This)</h3>
+          <p>ハイボールをモチーフにしたインタラクティブなポートフォリオ（泡エフェクト・レスポンシブ）</p>
+          <p><a class="link" href="work-detail.html?slug=sample2">Detail →</a></p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="panel fade-scroll" aria-labelledby="contact-title">
+      <h2 id="contact-title">Contact</h2>
+      <p>ご連絡はメールまたはSNSへお願いします。</p>
+      <p>
+        <a class="btn" href="mailto:you@example.com">📧 Email</a>
+        <a class="btn ghost" href="https://twitter.com/" target="_blank" rel="noopener">🐦 X</a>
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <p>© 2025 Honjo Tasuku — Portfolio</p>
   </footer>
 
-  <!-- JS -->
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>

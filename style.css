@@ -1,159 +1,109 @@
-/* ===== リセット ===== */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #fff;
-  overflow-x: hidden;
-  background: #111;
+/* ===== Reset & Base ===== */
+:root{
+  --bg-top: #fff9e6;
+  --bg-mid: #f5c84c;
+  --bg-btm: #e0a92d;
+  --text: #111;
+  --muted: #5b4a2f;
+  --accent: #fffbf0;
+  --glass: rgba(255,255,255,0.06);
+  --max-width: 1100px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family: "Noto Sans JP", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  line-height:1.65;
+  color:var(--text);
+  margin:0;
+  background-color:var(--bg-mid);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  min-height:100vh;
 }
 
-/* ===== 背景パーティクル ===== */
-canvas {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: -2;
+/* skip link */
+.skip-link{
+  position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;
+}
+.skip-link:focus{position:static;padding:8px 12px;background:#000;color:#fff;left:8px;top:8px;border-radius:4px;z-index:9999}
+
+/* 固定背景レイヤー（やわらかい放射） */
+.bg-layer{
+  position:fixed;inset:0;z-index:-3;
+  background: radial-gradient(circle at 50% 12%,
+    var(--bg-top) 0%,
+    var(--bg-mid) 55%,
+    var(--bg-btm) 100%);
+  filter: saturate(0.98);
+  pointer-events:none;
+  background-attachment:fixed;
 }
 
-/* ===== 半透明オーバーレイ ===== */
-.overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.4);
-  z-index: -1;
-}
+/* canvas for bubbles */
+#bubbles{position:fixed;inset:0;z-index:-2;pointer-events:none}
 
-/* ===== ナビ ===== */
-nav {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  padding: 1rem 0;
-  backdrop-filter: blur(10px);
-  background: rgba(255,255,255,0.1);
-  z-index: 10;
-}
-nav a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  transition: 0.3s;
-}
-nav a:hover {
-  color: #0ff;
-  text-shadow: 0 0 10px #0ff;
-}
+/* header/nav */
+.site-header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);backdrop-filter:blur(6px)}
+.nav{max-width:var(--max-width);margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-weight:700;color:#fff;text-decoration:none;letter-spacing:0.6px}
+.nav-list{list-style:none;display:flex;gap:14px;margin:0;padding:0}
+.nav-list a{color:var(--accent);text-decoration:none;padding:6px 8px;border-radius:6px}
+.nav-list a:hover{background:var(--glass);color:#fff;}
 
-/* ===== ヒーローセクション ===== */
-header {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-header h1 {
-  font-size: 4rem;
-  text-shadow: 0 0 20px rgba(0,255,255,0.5);
-}
-header p {
-  margin-top: 1rem;
-  font-size: 1.5rem;
-  opacity: 0.8;
-  text-shadow: 0 0 10px rgba(0,0,0,0.7);
-}
+/* container */
+.container{max-width:var(--max-width);margin:0 auto;padding:28px 20px}
 
-/* ===== セクション ===== */
-section {
-  padding: 5rem 2rem;
-  text-align: center;
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 1s ease;
-}
-section.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-h2 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  text-shadow: 0 0 15px rgba(0,255,255,0.8);
-}
+/* hero */
+.hero{min-height:60vh;display:flex;align-items:center}
+.hero-inner{background: rgba(255,255,255,0.02); padding:36px;border-radius:12px;backdrop-filter: blur(4px)}
+h1{font-family:"Noto Serif JP", serif;font-size:clamp(28px,5vw,44px);margin:0 0 8px;color:#fff}
+.hero-sub{color:rgba(255,255,255,0.92);margin-bottom:12px}
+.btn{display:inline-block;padding:10px 14px;border-radius:8px;background:linear-gradient(90deg,#fff6d9,#ffd77a);color:#0b0b0b;text-decoration:none;font-weight:700;margin-right:8px}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(255,255,255,0.06)}
 
-/* ===== カード ===== */
-.card-container {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-.card {
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
-  padding: 2rem;
-  border-radius: 15px;
-  width: 250px;
-  transition: transform 0.4s, box-shadow 0.4s;
-  cursor: pointer;
-}
-.card:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 20px 40px rgba(0,255,255,0.4);
-}
+/* panels */
+.panel{margin:36px 0;padding:20px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.03));border-radius:10px}
+.grid{display:grid;grid-template-columns:260px 1fr;gap:18px;align-items:start}
+.profile-photo{width:100%;border-radius:8px;display:block}
 
-/* ===== フッター ===== */
-footer {
-  padding: 2rem;
-  text-align: center;
-  background: rgba(0,0,0,0.7);
-  margin-top: 3rem;
-}
+/* skill grid */
+.skill-grid{display:flex;gap:14px;flex-wrap:wrap}
+.skill{background:rgba(255,255,255,0.03);padding:12px;border-radius:8px;min-width:160px}
 
-/* ===== スクロールフェードイン ===== */
-.fade-scroll {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 1s ease-out;
-}
-.fade-scroll.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* works */
+.card-row{display:flex;gap:18px;flex-wrap:wrap}
+.work-card{background:rgba(0,0,0,0.06);padding:14px;border-radius:10px;width:320px}
+.work-thumb img{width:100%;height:auto;border-radius:6px}
+.link{text-decoration:none;color:rgba(255,255,255,0.9)}
 
-/* 横からフェードイン */
-.fade-left, .fade-right {
-  opacity: 0;
-  transition: all 1s ease-out;
-}
+/* works list */
+.works-list{display:flex;flex-direction:column;gap:18px}
+.work-item{display:flex;gap:14px;align-items:flex-start}
+.work-image{width:320px;height:auto;border-radius:8px}
+.work-body{flex:1}
 
-.fade-left {
-  transform: translateX(-40px);
-}
-.fade-right {
-  transform: translateX(40px);
-}
+/* work detail */
+.work-hero{width:100%;height:auto;border-radius:8px}
+.thumb-row{display:flex;gap:8px;flex-wrap:wrap}
 
-.fade-left.visible,
-.fade-right.visible {
-  opacity: 1;
-  transform: translateX(0);
+/* footer */
+.site-footer{text-align:center;padding:20px;color:rgba(255,255,255,0.6);font-size:14px}
+
+/* fade animations */
+.fade-scroll{opacity:0;transform:translateY(18px);transition:all .9s cubic-bezier(.2,.9,.2,1)}
+.fade-left{opacity:0;transform:translateX(-40px);transition:all .9s cubic-bezier(.2,.9,.2,1)}
+.visible{opacity:1;transform:none}
+
+/* responsive */
+@media (max-width:880px){
+  .grid{grid-template-columns:1fr;align-items:center}
+  .nav-list{display:none}
+  .work-image{width:240px}
+  .card-row{justify-content:center}
 }
-
-
-/* ===== その他 ===== */
-h3 {
-  font-size: 0.85rem;
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.775);
-}
-
-h4 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.775);
+@media (max-width:480px){
+  h1{font-size:28px}
+  .hero-inner{padding:18px}
+  .work-image{width:100%}
 }
