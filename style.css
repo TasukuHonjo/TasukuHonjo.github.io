@@ -2,8 +2,8 @@
 :root{
   --bg-top: #fff9e6;
   --bg-mid: #f5c84c;
-  --bg-btm: #e0a92d;
-  --text: #111;
+  --bg-btm: #d69600;
+  --text: #290000;
   --muted: #5b4a2f;
   --accent: #fffbf0;
   --glass: rgba(255,255,255,0.06);
@@ -28,20 +28,68 @@ body{
 }
 .skip-link:focus{position:static;padding:8px 12px;background:#000;color:#fff;left:8px;top:8px;border-radius:4px;z-index:9999}
 
-/* 固定背景レイヤー（やわらかい放射） */
-.bg-layer{
-  position:fixed;inset:0;z-index:-3;
+/* 背景レイヤー（黄金グラデーション） */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -3; /* 一番奥 */
   background: radial-gradient(circle at 50% 12%,
-    var(--bg-top) 0%,
-    var(--bg-mid) 55%,
-    var(--bg-btm) 100%);
-  filter: saturate(0.98);
-  pointer-events:none;
-  background-attachment:fixed;
+    #fff9e6 0%,
+    #f5c84c 55%,
+    #e0a92d 100%);
+  background-attachment: fixed;
+  pointer-events: none;
 }
 
-/* canvas for bubbles */
-#bubbles{position:fixed;inset:0;z-index:-2;pointer-events:none}
+.ice {
+  position: fixed;
+  background: url("texture/ice.png") no-repeat center/cover;
+  opacity: 0.22;
+  mix-blend-mode: screen;
+  backdrop-filter: blur(4px);
+  border-radius: 14px;
+  z-index: -2; /* 泡より奥 */
+  pointer-events: none;
+  animation: iceFloat 10s ease-in-out infinite alternate;
+}
+
+@keyframes iceFloat {
+  from { transform: translateY(0) rotate(0deg); }
+  to   { transform: translateY(26px) rotate(6deg); }
+}
+
+
+/* アニメーションにランダム感を出す */
+.ice:nth-child(1){ animation-duration: 11s; animation-delay: 0s; }
+.ice:nth-child(2){ animation-duration: 9s;  animation-delay: 2s; }
+.ice:nth-child(3){ animation-duration: 13s; animation-delay: 4s; }
+.ice:nth-child(4){ animation-duration: 12s; animation-delay: 6s; }
+
+
+
+/* 泡キャンバス */
+#bubbles {
+  position: fixed;
+  inset: 0;
+  z-index: -1; /* 氷より手前に変更 */
+  pointer-events: none;
+}
+
+
+/* 少しランダムに動きをずらす */
+/*.ice:nth-child(2){ animation-delay: 1s; }
+.ice:nth-child(3){ animation-delay: 2s; }
+.ice:nth-child(4){ animation-delay: 3s; }
+.ice:nth-child(5){ animation-delay: 4s; }
+.ice:nth-child(6){ animation-delay: 5s; }*/
+
+/* ゆっくり浮いて揺れる */
+@keyframes iceFloat {
+  from { transform: translateY(0px) rotate(0deg); }
+  to   { transform: translateY(20px) rotate(5deg); }
+}
+
+
 
 /* header/nav */
 .site-header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);backdrop-filter:blur(6px)}
