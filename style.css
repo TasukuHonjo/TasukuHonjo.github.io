@@ -5,7 +5,7 @@
   --bg-btm: #d69600;
   --text: #290000;
   --muted: #5b4a2f;
-  --accent: #fffbf0;
+  --accent: #ffd45d;
   --glass: rgba(255,255,255,0.06);
   --max-width: 1100px;
 }
@@ -34,13 +34,14 @@ body{
   inset: 0;
   z-index: -3; /* 一番奥 */
   background: radial-gradient(circle at 50% 12%,
-    #fff9e6 0%,
+    #ffe297 0%,
     #f5c84c 55%,
-    #e0a92d 100%);
+    #ffd470 100%);
   background-attachment: fixed;
   pointer-events: none;
 }
 
+/* ===== Ice cubes (background blocks) ===== */
 .ice {
   position: fixed;
   background: url("texture/ice.png") no-repeat center/cover;
@@ -50,38 +51,19 @@ body{
   border-radius: 14px;
   z-index: -2; /* 泡より奥 */
   pointer-events: none;
-  animation: iceFloat 10s ease-in-out infinite alternate;
+  will-change: transform;
+  transform-origin: center center;
 }
-
-@keyframes iceFloat {
-  from { transform: translateY(0) rotate(0deg); }
-  to   { transform: translateY(26px) rotate(6deg); }
-}
-
-
-/* アニメーションにランダム感を出す */
-.ice:nth-child(1){ animation-duration: 11s; animation-delay: 0s; }
-.ice:nth-child(2){ animation-duration: 9s;  animation-delay: 2s; }
-.ice:nth-child(3){ animation-duration: 13s; animation-delay: 4s; }
-.ice:nth-child(4){ animation-duration: 12s; animation-delay: 6s; }
-
-
 
 /* 泡キャンバス */
 #bubbles {
   position: fixed;
   inset: 0;
-  z-index: -1; /* 氷より手前に変更 */
+  z-index: -1; /* 氷より手前 */
   pointer-events: none;
 }
 
 
-/* 少しランダムに動きをずらす */
-/*.ice:nth-child(2){ animation-delay: 1s; }
-.ice:nth-child(3){ animation-delay: 2s; }
-.ice:nth-child(4){ animation-delay: 3s; }
-.ice:nth-child(5){ animation-delay: 4s; }
-.ice:nth-child(6){ animation-delay: 5s; }*/
 
 /* ゆっくり浮いて揺れる */
 @keyframes iceFloat {

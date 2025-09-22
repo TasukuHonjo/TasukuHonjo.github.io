@@ -163,30 +163,176 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 /* ===== Ice cubes random generation ===== */
+/* ===== Ice cubes: physics-driven motion ===== */
 document.addEventListener("DOMContentLoaded", () => {
   const NUM_ICE = 6;
   const MIN_SIZE = 350;
   const MAX_SIZE = 580;
+  const INFLUENCE = 400;    // マウスの影響半径
+  const PUSH_STRENGTH = 0.5;  // 押し出し強度
+  const SPRING = 0.1;      // 戻ろうとする力
+  const FRICTION = 0.9;     // 摩擦
+  const MAX_DISPLACEMENT = 300;
 
+  const ices = [];
+
+  // ----- 初期ランダム配置 -----
   for (let i = 0; i < NUM_ICE; i++) {
-    const ice = document.createElement("div");
-    ice.classList.add("ice");
+    const el = document.createElement("div");
+    el.classList.add("ice");
+    el.style.willChange = "transform";
+    el.style.transformOrigin = "center center";
+    el.style.position = "fixed";
 
     const size = Math.floor(Math.random() * (MAX_SIZE - MIN_SIZE) + MIN_SIZE);
-    ice.style.width = size + "px";
-    ice.style.height = size + "px";
+    const baseX = Math.random() * (window.innerWidth * 0.8 - size);
+    const baseY = Math.random() * (window.innerHeight * 0.7 - size);
 
-    ice.style.left = Math.random() * 80 + "%";
-    ice.style.top = Math.random() * 70 + "%";
+    el.style.width = size + "px";
+    el.style.height = size + "px";
+    el.style.left = baseX + "px";
+    el.style.top = baseY + "px";
 
-    const duration = 1.8 + Math.random() * 2.2;
-    const delay = Math.random() * 6;
-    ice.style.animationDuration = duration + "s";
-    ice.style.animationDelay = delay + "s";
+    document.body.appendChild(el);
 
-    document.body.appendChild(ice);
+    ices.push({
+      el,
+      size,
+      x: baseX,
+      y: baseY,
+      vx: 0,
+      vy: 0,
+      angle: (Math.random() - 0.5) * 4,
+    });
   }
+
+  // ----- ポテンシャル法で重なりを離す -----
+  const REPULSION = 20;   // 余白
+  const ITERATIONS = 200; // 調整ループ回数
+  for (let iter = 0; iter < ITERATIONS; iter++) {
+    for (let i = 0; i < ices.length; i++) {
+      for (let j = i + 1; j < ices.length; j++) {
+        const a = ices[i];
+        const b = ices[j];
+        const dx = (b.x + b.size/2) - (a.x + a.size/2);
+        const dy = (b.y + b.size/2) - (a.y + a.size/2);
+        const dist = Math.hypot(dx, dy);
+        const minDist = (a.size + b.size)/2 + REPULSION;
+
+        if (dist < minDist && dist > 0.1) {
+          // 重なっている場合は押し出す
+          const overlap = (minDist - dist) / 2;
+          const offsetX = (dx / dist) * overlap;
+          const offsetY = (dy / dist) * overlap;
+
+          a.x -= offsetX;
+          a.y -= offsetY;
+          b.x += offsetX;
+          b.y += offsetY;
+
+          // 画面外チェック
+          a.x = Math.max(0, Math.min(window.innerWidth - a.size, a.x));
+          a.y = Math.max(0, Math.min(window.innerHeight - a.size, a.y));
+          b.x = Math.max(0, Math.min(window.innerWidth - b.size, b.x));
+          b.y = Math.max(0, Math.min(window.innerHeight - b.size, b.y));
+        }
+      }
+    }
+  }
+
+  // ----- transformに反映 -----
+  ices.forEach((ice) => {
+    ice.baseX = ice.x; 
+    ice.baseY = ice.y; 
+    ice.el.style.left = ice.x + "px";
+    ice.el.style.top = ice.y + "px";
+  });
+
+
+  let mouseX = null;
+  let mouseY = null;
+
+  window.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+  window.addEventListener("mouseleave", () => {
+    mouseX = null;
+    mouseY = null;
+  });
+
+  let last = performance.now();
+  function frame(now) {
+    const dt = Math.min(32, now - last);
+    last = now;
+
+    for (let ice of ices) {
+      // マウスから押し出し
+      if (mouseX !== null && mouseY !== null) {
+        const cx = ice.x + ice.size / 2;
+        const cy = ice.y + ice.size / 2;
+        const dx = cx - mouseX;
+        const dy = cy - mouseY;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < INFLUENCE && dist > 0.001) {
+          const t = 1 - dist / INFLUENCE;
+          const force = PUSH_STRENGTH * (t * t);
+          ice.vx += (dx / dist) * force * (dt / 16);
+          ice.vy += (dy / dist) * force * (dt / 16);
+        }
+      }
+
+      // バネでベースに戻る力
+      const rx = (ice.baseX - ice.x) * SPRING * (dt / 16);
+      const ry = (ice.baseY - ice.y) * SPRING * (dt / 16);
+      ice.vx += rx;
+      ice.vy += ry;
+
+      // 摩擦
+      const fr = Math.pow(FRICTION, dt / 16);
+      ice.vx *= fr;
+      ice.vy *= fr;
+
+      // 更新
+      ice.x += ice.vx;
+      ice.y += ice.vy;
+      ice.angle += (ice.vx * 0.05 + ice.vy * 0.03);
+
+      // 最大変位制御
+      const dxBase = ice.x - ice.baseX;
+      const dyBase = ice.y - ice.baseY;
+      const disp = Math.hypot(dxBase, dyBase);
+      if (disp > MAX_DISPLACEMENT) {
+        const k = MAX_DISPLACEMENT / disp;
+        ice.x = ice.baseX + dxBase * k;
+        ice.y = ice.baseY + dyBase * k;
+        ice.vx *= 0.5;
+        ice.vy *= 0.5;
+      }
+
+      // transform 適用
+      const tx = Math.round(ice.x - ice.baseX);
+      const ty = Math.round(ice.y - ice.baseY);
+      ice.el.style.transform = `translate(${tx}px, ${ty}px) rotate(${ice.angle.toFixed(2)}deg)`;
+    }
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  window.addEventListener("resize", () => {
+    const ww = window.innerWidth;
+    const wh = window.innerHeight;
+    ices.forEach((ice) => {
+      ice.baseX = Math.min(Math.max(0, ice.baseX), Math.max(0, ww - ice.size));
+      ice.baseY = Math.min(Math.max(0, ice.baseY), Math.max(0, wh - ice.size));
+      ice.x = ice.baseX;
+      ice.y = ice.baseY;
+    });
+  });
 });
+
 
 /* ===== Accessibility: focus outlines for keyboard users ===== */
 (function () {
@@ -198,3 +344,5 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   window.addEventListener("keydown", handleFirstTab);
 })();
+
+
