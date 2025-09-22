@@ -1,4 +1,3 @@
-# Document Heading
+# 要件定義(笑)
 
-This is a document with a top-level heading
-これがほぼ要件定義書
+ゲーム制作(C++,C#)しか使ってないやつがポートフォリオ用にウェブページを作ってみる
