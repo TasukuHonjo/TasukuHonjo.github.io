@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const MAX_SIZE = 580;
   const INFLUENCE = 400;    // マウスの影響半径
   const PUSH_STRENGTH = 0.5;  // 押し出し強度
-  const SPRING = 0.1;      // 戻ろうとする力
+  const SPRING = 0.001;      // 戻ろうとする力
   const FRICTION = 0.9;     // 摩擦
   const MAX_DISPLACEMENT = 300;
 
@@ -331,6 +331,34 @@ document.addEventListener("DOMContentLoaded", () => {
       ice.y = ice.baseY;
     });
   });
+});
+
+
+/* ===== Bubble effect for mobile/desktop ===== */
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.querySelector(".bubble-container");
+
+  function createBubble() {
+    const bubble = document.createElement("span");
+    bubble.classList.add("bubble");
+
+    // ランダムなサイズ・位置・速度
+    const size = Math.random() * 8 + 4; // 4〜12px
+    bubble.style.width = `${size}px`;
+    bubble.style.height = `${size}px`;
+    bubble.style.left = `${Math.random() * 100}vw`;
+
+    const duration = Math.random() * 3 + 4; // 4〜7秒
+    bubble.style.animationDuration = `${duration}s`;
+
+    container.appendChild(bubble);
+
+    // 上昇アニメが終わったら削除
+    setTimeout(() => bubble.remove(), duration * 1000);
+  }
+
+  // 一定間隔で泡を生成
+  setInterval(createBubble, 100);
 });
 
 
