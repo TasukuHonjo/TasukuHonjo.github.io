@@ -1,15 +1,16 @@
 /* ===== Reset & Base ===== */
 :root{
-  --bg-top: #fff9e6;
-  --bg-mid: #f5c84c;
-  --bg-btm: #d69600;
-  --text: #290000;
-  --muted: #5b4a2f;
-  --accent: #ffd45d;
-  --glass: rgba(255,255,255,0.06);
-  --max-width: 1100px;
+  /* カラーテーマと共通変数 */
+  --bg-top: #fff9e6;   /* 上部背景色 */
+  --bg-mid: #f5c84c;   /* 中央背景色 */
+  --bg-btm: #d69600;   /* 下部背景色 */
+  --text: #290000;     /* 文字色 */
+  --muted: #5b4a2f;    /* 補助テキスト色 */
+  --accent: #ffd45d;   /* 強調色 */
+  --glass: rgba(255,255,255,0.06); /* 透過ガラスっぽい色 */
+  --max-width: 1100px; /* コンテンツ最大幅 */
 }
-*{box-sizing:border-box}
+*{box-sizing:border-box} /* 余白計算をborder-box基準に */
 html,body{height:100%}
 body{
   font-family: "Noto Sans JP", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
@@ -22,26 +23,34 @@ body{
   min-height:100vh;
 }
 
-/* skip link */
+/* skip link（キーボード操作用ショートカット） */
 .skip-link{
   position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;
 }
-.skip-link:focus{position:static;padding:8px 12px;background:#000;color:#fff;left:8px;top:8px;border-radius:4px;z-index:9999}
+.skip-link:focus{
+  position:static;
+  padding:8px 12px;
+  background:#000;
+  color:#382902;
+  left:8px;top:8px;
+  border-radius:4px;
+  z-index:9999
+}
 
-/* 背景レイヤー（黄金グラデーション） */
+/* 背景レイヤー（黄金のグラデーション背景） */
 .bg-layer {
   position: fixed;
   inset: 0;
-  z-index: -3; /* 一番奥 */
+  z-index: -3; /* 一番奥に配置 */
   background: radial-gradient(circle at 50% 12%,
     #ffe297 0%,
     #f5c84c 55%,
     #ffd470 100%);
   background-attachment: fixed;
-  pointer-events: none;
+  pointer-events: none; /* クリックなど無効化 */
 }
 
-/* ===== Ice cubes (background blocks) ===== */
+/* ===== Ice cubes (背景の氷ブロック) ===== */
 .ice {
   position: fixed;
   background: url("texture/ice.png") no-repeat center/cover;
@@ -49,7 +58,7 @@ body{
   mix-blend-mode: screen;
   backdrop-filter: blur(4px);
   border-radius: 14px;
-  z-index: -2; /* 泡より奥 */
+  z-index: -2; /* 泡より奥に配置 */
   pointer-events: none;
   will-change: transform;
   transform-origin: center center;
@@ -59,76 +68,214 @@ body{
 #bubbles {
   position: fixed;
   inset: 0;
-  z-index: -1; /* 氷より手前 */
+  z-index: -1; /* 氷より手前に表示 */
   pointer-events: none;
 }
 
-
-
-/* ゆっくり浮いて揺れる */
+/* 氷がゆっくり上下＆回転するアニメーション */
 @keyframes iceFloat {
   from { transform: translateY(0px) rotate(0deg); }
   to   { transform: translateY(20px) rotate(5deg); }
 }
 
+/* ===== ヘッダー / ナビゲーション ===== */
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);
+  backdrop-filter:blur(6px)
+}
+.nav{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:10px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between
+}
+.nav-logo{
+  font-weight:700;
+  color:#391a0b;
+  text-decoration:none;
+  letter-spacing:0.6px
+}
+.nav-list{
+  list-style:none;
+  display:flex;
+  gap:14px;
+  margin:0;
+  padding:0
+}
+.nav-list a{
+  color:var(--accent);
+  text-decoration:none;
+  padding:6px 8px;
+  border-radius:6px
+}
+.nav-list a:hover{
+  background:var(--glass);
+  color:#fff;
+}
 
+/* コンテンツコンテナ */
+.container{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:28px 20px
+}
 
-/* header/nav */
-.site-header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);backdrop-filter:blur(6px)}
-.nav{max-width:var(--max-width);margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-weight:700;color:#fff;text-decoration:none;letter-spacing:0.6px}
-.nav-list{list-style:none;display:flex;gap:14px;margin:0;padding:0}
-.nav-list a{color:var(--accent);text-decoration:none;padding:6px 8px;border-radius:6px}
-.nav-list a:hover{background:var(--glass);color:#fff;}
+/* ===== Hero セクション ===== */
+.hero{
+  min-height:60vh;
+  display:flex;
+  align-items:center
+}
+.hero-inner{
+  background: rgba(255,255,255,0.02);
+  padding:36px;
+  border-radius:12px;
+  backdrop-filter: blur(4px)
+}
+h1{
+  font-family:"Noto Serif JP", serif;
+  font-size:clamp(28px,5vw,44px);
+  margin:0 0 8px;
+  color:#2a2222
+}
+.hero-sub{
+  color:rgba(27, 19, 19, 0.92);
+  margin-bottom:12px
+}
+/* ボタン */
+.btn{
+  display:inline-block;
+  padding:10px 14px;
+  border-radius:8px;
+  background:linear-gradient(90deg,#ffe99f,#ffd77a);
+  color:#0b0b0b;
+  text-decoration:none;
+  font-weight:700;
+  margin-right:8px
+}
+.btn.ghost{
+  background:transparent;
+  color:var(--accent);
+  border:1px solid rgba(255,255,255,0.06)
+}
 
-/* container */
-.container{max-width:var(--max-width);margin:0 auto;padding:28px 20px}
+/* ===== パネルセクション ===== */
+.panel{
+  margin:36px 0;
+  padding:20px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.03));
+  border-radius:10px
+}
+.grid{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  gap:18px;
+  align-items:start
+}
+.profile-photo{
+  width:100%;
+  border-radius:8px;
+  display:block
+}
 
-/* hero */
-.hero{min-height:60vh;display:flex;align-items:center}
-.hero-inner{background: rgba(255,255,255,0.02); padding:36px;border-radius:12px;backdrop-filter: blur(4px)}
-h1{font-family:"Noto Serif JP", serif;font-size:clamp(28px,5vw,44px);margin:0 0 8px;color:#fff}
-.hero-sub{color:rgba(255,255,255,0.92);margin-bottom:12px}
-.btn{display:inline-block;padding:10px 14px;border-radius:8px;background:linear-gradient(90deg,#fff6d9,#ffd77a);color:#0b0b0b;text-decoration:none;font-weight:700;margin-right:8px}
-.btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(255,255,255,0.06)}
+/* ===== スキル一覧 ===== */
+.skill-grid{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap
+}
+.skill{
+  background:rgba(255,255,255,0.03);
+  padding:12px;
+  border-radius:8px;
+  min-width:160px
+}
 
-/* panels */
-.panel{margin:36px 0;padding:20px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.03));border-radius:10px}
-.grid{display:grid;grid-template-columns:260px 1fr;gap:18px;align-items:start}
-.profile-photo{width:100%;border-radius:8px;display:block}
+/* ===== 作品カード ===== */
+.card-row{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap
+}
+.work-card{
+  background:rgba(0,0,0,0.06);
+  padding:14px;
+  border-radius:10px;
+  width:320px
+}
+.work-thumb img{
+  width:100%;
+  height:auto;
+  border-radius:6px
+}
+.link{
+  text-decoration:none;
+  color:rgba(37, 25, 7, 0.9)
+}
 
-/* skill grid */
-.skill-grid{display:flex;gap:14px;flex-wrap:wrap}
-.skill{background:rgba(255,255,255,0.03);padding:12px;border-radius:8px;min-width:160px}
-
-/* works */
-.card-row{display:flex;gap:18px;flex-wrap:wrap}
-.work-card{background:rgba(0,0,0,0.06);padding:14px;border-radius:10px;width:320px}
-.work-thumb img{width:100%;height:auto;border-radius:6px}
-.link{text-decoration:none;color:rgba(255,255,255,0.9)}
-
-/* works list */
-.works-list{display:flex;flex-direction:column;gap:18px}
-.work-item{display:flex;gap:14px;align-items:flex-start}
-.work-image{width:320px;height:auto;border-radius:8px}
+/* 作品リスト（縦型） */
+.works-list{
+  display:flex;
+  flex-direction:column;
+  gap:18px
+}
+.work-item{
+  display:flex;
+  gap:14px;
+  align-items:flex-start
+}
+.work-image{
+  width:320px;
+  height:auto;
+  border-radius:8px
+}
 .work-body{flex:1}
 
-/* work detail */
-.work-hero{width:100%;height:auto;border-radius:8px}
-.thumb-row{display:flex;gap:8px;flex-wrap:wrap}
+/* 作品詳細 */
+.work-hero{
+  width:100%;
+  height:auto;
+  border-radius:8px
+}
+.thumb-row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap
+}
 
-/* footer */
-.site-footer{text-align:center;padding:20px;color:rgba(255,255,255,0.6);font-size:14px}
+/* ===== フッター ===== */
+.site-footer{
+  text-align:center;
+  padding:20px;
+  color:rgba(255,255,255,0.6);
+  font-size:14px
+}
 
-/* fade animations */
-.fade-scroll{opacity:0;transform:translateY(18px);transition:all .9s cubic-bezier(.2,.9,.2,1)}
-.fade-left{opacity:0;transform:translateX(-40px);transition:all .9s cubic-bezier(.2,.9,.2,1)}
-.visible{opacity:1;transform:none}
+/* ===== フェードアニメーション ===== */
+.fade-scroll{
+  opacity:0;
+  transform:translateY(18px);
+  transition:all .9s cubic-bezier(.2,.9,.2,1)
+}
+.fade-left{
+  opacity:0;
+  transform:translateX(-40px);
+  transition:all .9s cubic-bezier(.2,.9,.2,1)
+}
+.visible{
+  opacity:1;
+  transform:none
+}
 
-/* responsive */
+/* ===== レスポンシブ対応 ===== */
 @media (max-width:880px){
   .grid{grid-template-columns:1fr;align-items:center}
-  .nav-list{display:none}
+  .nav-list{display:none} /* スマホでメニュー非表示 */
   .work-image{width:240px}
   .card-row{justify-content:center}
 }
