@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ===== Ice cubes random generation ===== */
 /* ===== Ice cubes: physics-driven motion ===== */
 document.addEventListener("DOMContentLoaded", () => {
-  const NUM_ICE = 6;
+  const NUM_ICE = 10;
   const MIN_SIZE = 350;
   const MAX_SIZE = 580;
   const INFLUENCE = 400;    // マウスの影響半径

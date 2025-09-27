@@ -58,7 +58,7 @@ body{
   mix-blend-mode: screen;
   backdrop-filter: blur(4px);
   border-radius: 14px;
-  z-index: -2; /* 泡より奥に配置 */
+  z-index: -3; /* 泡より奥に配置 */
   pointer-events: none;
   will-change: transform;
   transform-origin: center center;
@@ -159,9 +159,14 @@ h1{
   margin-right:8px
 }
 .btn.ghost{
-  background:transparent;
-  color:var(--accent);
-  border:1px solid rgba(255,255,255,0.06)
+  display:inline-block;
+  padding:10px 14px;
+  border-radius:8px;
+  background:linear-gradient(90deg,#ffe99f,#ffd77a);
+  color:#0b0b0b;
+  text-decoration:none;
+  font-weight:700;
+  margin-right:8px
 }
 
 /* ===== パネルセクション ===== */
