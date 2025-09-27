@@ -188,7 +188,14 @@ h1{
   display:block
 }
 
-/* ===== スキル一覧 ===== */
+h2{
+  font-family:"Noto Serif JP", serif;
+  font-size:24px;
+  margin-top:0;
+  color:#2a2222
+}
+
+/* ===== アピールポイント一覧 ===== */
 .skill-grid{
   display:flex;
   gap:14px;
