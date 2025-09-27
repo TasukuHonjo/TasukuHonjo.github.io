@@ -4,17 +4,27 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Work Detail — Honjo</title>
+
+  <!-- Google Fonts: 日本語フォント（Noto Sans/Serif JP）を読み込み -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- 外部CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- キーボード操作ユーザー向けに「本文へスキップ」リンクを配置 -->
   <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- 背景演出用のキャンバス（泡エフェクトなど） -->
   <canvas id="bubbles" aria-hidden="true"></canvas>
+  <!-- 装飾用レイヤー（意味を持たないので aria-hidden） -->
   <div class="bg-layer" aria-hidden="true"></div>
 
+  <!-- サイト全体のヘッダー -->
   <header class="site-header" role="banner">
+    <!-- ナビゲーション（メインメニュー） -->
     <nav class="nav" role="navigation" aria-label="Main">
-      <a class="nav-logo" href="index.html">HONJO ACTIVITY</a>
+      <a class="nav-logo" href="index.html">Portfolio</a>
       <ul class="nav-list">
         <li><a href="index.html">Home</a></li>
         <li><a href="works.html">Works</a></li>
@@ -23,21 +33,31 @@
     </nav>
   </header>
 
+  <!-- ページのメインコンテンツ -->
   <main id="main" class="container" role="main">
     <section class="panel fade-scroll" aria-labelledby="detail-title">
+      <!-- セクション見出し -->
       <h1 id="detail-title">Work Detail</h1>
 
-      <!-- This template reads ?slug= in URL and fills demo content -->
+      <!-- JSでURLパラメータを読み取り、この中に作品詳細を注入 -->
       <div id="work-detail" class="work-detail">
+
+        <!-- メインビジュアル（差し替えられる） -->
         <img id="work-hero" src="https://placehold.jp/960x540.png" alt="" class="work-hero">
+
+        <!-- 作品メタ情報 -->
         <div class="work-meta">
           <h2 id="work-title">Sample Work</h2>
           <p><strong>担当範囲:</strong> ゲーム設計 / プロトタイプ</p>
           <p><strong>使用技術:</strong> Unity, C#</p>
         </div>
+
+        <!-- 作品の説明エリア -->
         <div class="work-desc">
           <h3>概要</h3>
-          <p id="work-desc-text">ここに作品の詳細な説明を入れてください。スクリーンショットや動画、プレイ可能なリンクを掲載できます。</p>
+          <p id="work-desc-text">
+            ここに作品の詳細な説明を入れてください。スクリーンショットや動画、プレイ可能なリンクを掲載できます。
+          </p>
 
           <h3>スクリーンショット</h3>
           <div class="thumb-row">
@@ -47,26 +67,35 @@
           </div>
 
           <h3>プレイ/動画</h3>
-          <p>必要に応じて <a href="#">動画埋め込み</a> や <a href="#">プレイリンク</a> を追加。</p>
+          <p>
+            必要に応じて <a href="#">動画埋め込み</a> や <a href="#">プレイリンク</a> を追加。
+          </p>
         </div>
-
       </div>
     </section>
   </main>
 
+  <!-- フッター -->
   <footer class="site-footer" role="contentinfo">
     <p>© 2025 Honjo Tasuku</p>
   </footer>
 
+  <!-- 外部スクリプト -->
   <script src="script.js" defer></script>
+
+  <!-- ページごとに異なる作品データを切り替える簡易スクリプト -->
   <script>
-    // Simple demo: use URL param ?slug=sample1 or sample2
+    // URLパラメータ ?slug= の値を読み取って、内容を切り替える
     (function(){
       const params = new URLSearchParams(location.search);
       const slug = params.get('slug') || 'sample2';
+
+      // DOM要素を取得
       const titleEl = document.getElementById('work-title');
       const hero = document.getElementById('work-hero');
       const desc = document.getElementById('work-desc-text');
+
+      // slugごとに作品データを差し替え
       if(slug === 'sample1') {
         titleEl.textContent = 'Algorithmism — Card Prototype';
         hero.src = 'https://placehold.jp/960x540.png';
