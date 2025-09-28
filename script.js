@@ -145,12 +145,13 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let b of bubbles) {
       const dx = b.x - x;
       const dy = b.y - y;
-      if (!b.floating && Math.sqrt(dx * dx + dy * dy) < b.r * 1.2) {
+      if (!b.floating && dx*dx + dy*dy < (b.r * 2) ** 2) {
         b.floating = true;
         b.life = 0;
       }
     }
   }
+
   window.addEventListener("mousemove", (e) => checkCollision(e.clientX, e.clientY));
   window.addEventListener("touchmove", (e) => {
     const t = e.touches[0];
@@ -161,6 +162,20 @@ document.addEventListener('DOMContentLoaded', () => {
     h = canvas.height = window.innerHeight;
   });
 })();
+
+function getCanvasPos(e, canvas) {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: e.clientX - rect.left,
+    y: e.clientY - rect.top
+  };
+}
+
+window.addEventListener("mousemove", (e) => {
+  const pos = getCanvasPos(e, canvas);
+  checkCollision(pos.x, pos.y);
+});
+
 
 /* ===== Ice cubes random generation ===== */
 /* ===== Ice cubes: physics-driven motion ===== */
@@ -179,41 +194,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const INFLUENCE = 400;    // マウスの影響半径
   const PUSH_STRENGTH = 0.5;  // 押し出し強度
-  const SPRING = 0.001;      // 戻ろうとする力
+  const SPRING = 0.0005;      // 戻ろうとする力
   const FRICTION = 0.9;     // 摩擦
-  const MAX_DISPLACEMENT = 300;
+  const MAX_DISPLACEMENT = 1000;
 
   const ices = [];
 
-  // ----- 初期ランダム配置 -----
-  for (let i = 0; i < NUM_ICE; i++) {
-    const el = document.createElement("div");
-    el.classList.add("ice");
-    el.style.willChange = "transform";
-    el.style.transformOrigin = "center center";
-    el.style.position = "fixed";
+  // 画面外に多少はみ出す許容範囲
+const OFFSET_X = 500; // 左右
+const OFFSET_Y = 300; // 上下
 
-    const size = Math.floor(Math.random() * (MAX_SIZE - MIN_SIZE) + MIN_SIZE);
-    const baseX = Math.random() * (window.innerWidth * 0.8 - size);
-    const baseY = Math.random() * (window.innerHeight * 0.7 - size);
+// ----- 初期ランダム配置 -----
+for (let i = 0; i < NUM_ICE; i++) {
+  const el = document.createElement("div");
+  el.classList.add("ice");
+  el.style.willChange = "transform";
+  el.style.transformOrigin = "center center";
+  el.style.position = "fixed";
 
-    el.style.width = size + "px";
-    el.style.height = size + "px";
-    el.style.left = baseX + "px";
-    el.style.top = baseY + "px";
+  const size = Math.floor(Math.random() * (MAX_SIZE - MIN_SIZE) + MIN_SIZE);
 
-    document.body.appendChild(el);
+  // 通常のランダム値に ±OFFSET を加味する
+  const baseX = Math.random() * (window.innerWidth * 0.8 - size + OFFSET_X * 2) - OFFSET_X;
+  const baseY = Math.random() * (window.innerHeight * 0.7 - size + OFFSET_Y * 2) - OFFSET_Y;
 
-    ices.push({
-      el,
-      size,
-      x: baseX,
-      y: baseY,
-      vx: 0,
-      vy: 0,
-      angle: (Math.random() - 0.5) * 4,
-    });
-  }
+  el.style.width = size + "px";
+  el.style.height = size + "px";
+  el.style.left = baseX + "px";
+  el.style.top = baseY + "px";
+
+  document.body.appendChild(el);
+
+  ices.push({
+    el,
+    size,
+    x: baseX,
+    y: baseY,
+    vx: 0,
+    vy: 0,
+    angle: (Math.random() - 0.5) * 4,
+  });
+}
+
 
   // ----- ポテンシャル法で重なりを離す -----
   const REPULSION = 20;   // 余白

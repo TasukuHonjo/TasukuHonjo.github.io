@@ -5,32 +5,25 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>HonjoPortfolio</title>
 
-  <!-- Google Fonts を読み込み（日本語対応フォント） -->
+  <!-- Google Fonts（日本語対応フォント） -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- 外部CSS読み込み -->
+  <!-- 外部CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- キーボード操作ユーザー向けスキップリンク -->
+  <!-- アクセシビリティ: スキップリンク -->
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- 泡のアニメーションを描画するキャンバス -->
+  <!-- ===== 背景演出（バブル・氷） ===== -->
   <canvas id="bubbles" aria-hidden="true"></canvas>
-
-  <!-- 泡用のコンテナ -->
-<div class="bubble-container" aria-hidden="true"></div>
-
- 
-  <!-- 固定背景レイヤー（装飾用: ハイボール感を演出） -->
+  <div class="bubble-container" aria-hidden="true"></div>
   <div class="bg-layer" aria-hidden="true"></div>
 
-  <!-- サイトのヘッダー / ナビゲーション -->
+  <!-- ===== サイトヘッダー（ナビゲーション） ===== -->
   <header class="site-header" role="banner">
     <nav class="nav" role="navigation" aria-label="Main">
-      <!-- ロゴ -->
       <a class="nav-logo" href="index.html">Portfolio</a>
-      <!-- ナビメニュー -->
       <ul class="nav-list">
         <li><a href="index.html">Home</a></li>
         <li><a href="works.html">Works</a></li>
@@ -39,23 +32,22 @@
     </nav>
   </header>
 
-  <!-- メインコンテンツ -->
+  <!-- ===== メインコンテンツ ===== -->
   <main id="main" class="container" role="main">
-    
+
+    <!-- キャッチコピー -->
     <section class="hero-catch">
-  <h1>
-    蒸留し、熟成させ、ブレンドする。<br>
-    それが僕の考えるゲーム制作。
-  </h1>
-</section>
+      <h1>
+        蒸留し、熟成させ、ブレンドする。<br>
+        それが僕の考えるゲーム制作。
+      </h1>
+    </section>
 
-
-    <!-- Hero セクション（トップ見出し） -->
+    <!-- Hero セクション -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-inner">
         <h1 id="hero-title">Honjo Tasuku</h1>
         <p class="hero-sub">ゲームプランナー志望</p>
-        <!-- CTAボタン -->
         <p class="hero-cta">
           <a class="btn" href="works.html">作品一覧</a>
           <a class="btn ghost" href="mailto:honjo.office0419@gmail.com">お問い合わせはこちら</a>
@@ -67,14 +59,14 @@
     <section id="about" class="panel fade-left" aria-labelledby="about-title">
       <h2 id="about-title">自己紹介</h2>
       <div class="grid">
-        <!-- プロフィール画像 -->
         <div class="card profile">
           <img src="https://placehold.jp/400x400.png" alt="写真（プレースホルダ）" class="profile-photo">
         </div>
-        <!-- 自己紹介テキスト -->
         <div>
-          <p><strong>本庄 佑</strong>（HAL大阪） — ゲームプランナー志望。ゲームの「面白さ」「楽しさ」を追求し、企画に落とし込むことを常日頃勉強中。Unity / C# を用いたプロトタイプ制作が得意。色んなことに挑戦したいと思い、普段使わない言語での制作をこのサイトでやってみた。</p>
-          <!-- 基本情報リスト -->
+          <p>
+            <strong>本庄 佑</strong>（HAL大阪） — ゲームプランナー志望。ゲームの「面白さ」「楽しさ」を追求し、企画に落とし込むことを常日頃勉強中。
+            Unity / C# を用いたプロトタイプ制作が得意。色んなことに挑戦したいと思い、普段使わない言語での制作をこのサイトでやってみた。
+          </p>
           <ul class="meta-list">
             <li><strong>所属:</strong> HAL大阪 ゲームプランナー専攻</li>
             <li><strong>出身:</strong> 兵庫県丹波市</li>
@@ -84,13 +76,13 @@
       </div>
     </section>
 
-    <!-- 業界就職後に目指すこと-->
+    <!-- 目標 -->
     <section id="goal" class="panel fade-right" aria-labelledby="goal-title">
       <h2 id="goal-title">業界就職後に目指すこと</h2>
       <p>ユーザーの記憶に残るゲームを作り、夢や希望を与える。</p>
-
     </section>
-    <!-- アピールポイント一覧 -->
+
+    <!-- アピールポイント -->
     <section id="skills" class="panel fade-scroll" aria-labelledby="skills-title">
       <h2 id="skills-title">アピールポイント</h2>
       <div class="skill-grid">
@@ -113,8 +105,7 @@
     <section id="works-preview" class="panel fade-scroll" aria-labelledby="works-preview-title">
       <h2 id="works-preview-title">Selected Works</h2>
       <div class="card-row">
-        <!-- 作品カード1 -->
-        <article class="work-card" role="article" aria-labelledby="w1">
+        <article class="work-card" aria-labelledby="w1">
           <a href="work-detail.html?slug=sample1" class="work-thumb" aria-hidden="true">
             <img src="https://placehold.jp/480x270.png" alt="">
           </a>
@@ -122,9 +113,7 @@
           <p>カードでアルゴリズムを並び替えるミニゲーム。準備フェーズ / 実行フェーズの設計を担当。</p>
           <p><a class="link" href="work-detail.html?slug=sample1">Detail →</a></p>
         </article>
-
-        <!-- 作品カード2 -->
-        <article class="work-card" role="article" aria-labelledby="w2">
+        <article class="work-card" aria-labelledby="w2">
           <a href="work-detail.html?slug=sample2" class="work-thumb" aria-hidden="true">
             <img src="https://placehold.jp/480x270.png" alt="">
           </a>
@@ -144,15 +133,14 @@
         <a class="btn ghost" href="https://twitter.com/@honjo9man" target="_blank" rel="noopener">🐦 X</a>
       </p>
     </section>
-
   </main>
 
-  <!-- フッター -->
+  <!-- ===== フッター ===== -->
   <footer class="site-footer" role="contentinfo">
-    <p>2025 Honjo Tasuku — Portfolio</p>
+    <p> X : @honjo9man</p>
   </footer>
 
-  <!-- JavaScriptファイル読み込み -->
+  <!-- ===== JavaScript ===== -->
   <script src="script.js" defer></script>
 </body>
 </html>
