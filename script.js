@@ -168,6 +168,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const NUM_ICE = 10;
   const MIN_SIZE = 350;
   const MAX_SIZE = 580;
+
+  if (window.innerWidth <= 768) {   // スマホ
+    MIN_SIZE = 150;
+    MAX_SIZE = 250;
+  } else if (window.innerWidth <= 1200) { // タブレット
+    MIN_SIZE = 250;
+    MAX_SIZE = 400;
+  }
+
   const INFLUENCE = 400;    // マウスの影響半径
   const PUSH_STRENGTH = 0.5;  // 押し出し強度
   const SPRING = 0.001;      // 戻ろうとする力
