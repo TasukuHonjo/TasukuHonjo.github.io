@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let h = (canvas.height = window.innerHeight);
 
   const bubbles = [];
-  const NUM_BUBBLES = 80;     // 常に維持する泡の数
+  const NUM_BUBBLES = 40;     // 常に維持する泡の数
   const rand = (a, b) => Math.random() * (b - a) + a;
 
   function createBubble(x = rand(0, w), y = rand(0, h), r = rand(4, 12)) {
