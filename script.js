@@ -200,11 +200,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const ices = [];
 
-  // 画面外に多少はみ出す許容範囲
-const OFFSET_X = 500; // 左右
-const OFFSET_Y = 300; // 上下
+
 
 // ----- 初期ランダム配置 -----
+// 画面外に多少はみ出す許容範囲
+const OFFSET_X = 200; // 左右
+const OFFSET_Y = 150; // 上下
+
 for (let i = 0; i < NUM_ICE; i++) {
   const el = document.createElement("div");
   el.classList.add("ice");
@@ -214,9 +216,35 @@ for (let i = 0; i < NUM_ICE; i++) {
 
   const size = Math.floor(Math.random() * (MAX_SIZE - MIN_SIZE) + MIN_SIZE);
 
-  // 通常のランダム値に ±OFFSET を加味する
-  const baseX = Math.random() * (window.innerWidth * 0.8 - size + OFFSET_X * 2) - OFFSET_X;
-  const baseY = Math.random() * (window.innerHeight * 0.7 - size + OFFSET_Y * 2) - OFFSET_Y;
+  let baseX, baseY;
+
+  if (Math.random() < 0.3) {
+    // ===== 30% は「必ずはみ出す」 =====
+    // 画面外の上下左右いずれかに出す
+    const side = Math.floor(Math.random() * 4); // 0=左,1=右,2=上,3=下
+    switch (side) {
+      case 0: // 左にはみ出す
+        baseX = -Math.random() * OFFSET_X - size * 0.5;
+        baseY = Math.random() * window.innerHeight;
+        break;
+      case 1: // 右にはみ出す
+        baseX = window.innerWidth + Math.random() * OFFSET_X - size * 0.5;
+        baseY = Math.random() * window.innerHeight;
+        break;
+      case 2: // 上にはみ出す
+        baseX = Math.random() * window.innerWidth;
+        baseY = -Math.random() * OFFSET_Y - size * 0.5;
+        break;
+      case 3: // 下にはみ出す
+        baseX = Math.random() * window.innerWidth;
+        baseY = window.innerHeight + Math.random() * OFFSET_Y - size * 0.5;
+        break;
+    }
+  } else {
+    // ===== 残り 70% は「普通に画面内」 =====
+    baseX = Math.random() * (window.innerWidth - size);
+    baseY = Math.random() * (window.innerHeight - size);
+  }
 
   el.style.width = size + "px";
   el.style.height = size + "px";
@@ -235,6 +263,7 @@ for (let i = 0; i < NUM_ICE; i++) {
     angle: (Math.random() - 0.5) * 4,
   });
 }
+
 
 
   // ----- ポテンシャル法で重なりを離す -----
