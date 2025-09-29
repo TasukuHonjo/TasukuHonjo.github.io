@@ -451,8 +451,7 @@ const dots = document.querySelectorAll('.slider-dots .dot');
 let currentIndex = 0;
 
 function updateSlider() {
-  const width = track.children[0].offsetWidth + 20; // 画像幅 + margin
-  track.style.transform = `translateX(-${currentIndex * width}px)`;
+  track.style.transform = `translateX(-${currentIndex * 100}%)`;
 
   dots.forEach(dot => dot.classList.remove('active'));
   dots[currentIndex].classList.add('active');
