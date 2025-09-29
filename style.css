@@ -198,6 +198,27 @@ body{
 .slider-btn.prev { left: -2rem; }
 .slider-btn.next { right: -2rem; }
 
+/* ドット */
+.slider-dots {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.slider-dots .dot {
+  width: 10px;
+  height: 10px;
+  background-color: rgba(100, 40, 0, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider-dots .dot.active {
+  background-color: rgba(100,40,0,0.9);
+}
 
 /* ===== Hero セクション ===== */
 .hero{

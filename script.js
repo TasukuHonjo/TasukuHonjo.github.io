@@ -446,23 +446,31 @@ window.addEventListener("scroll", () => {
   img.style.opacity = opacity;
 });
 
-const track = document.querySelector(".slider-track");
-const slides = document.querySelectorAll(".slide");
-const prevBtn = document.querySelector(".slider-btn.prev");
-const nextBtn = document.querySelector(".slider-btn.next");
-
+const track = document.querySelector('.slider-track');
+const dots = document.querySelectorAll('.slider-dots .dot');
 let currentIndex = 0;
 
 function updateSlider() {
-  track.style.transform = `translateX(-${currentIndex * 100}%)`;
+  const width = track.children[0].offsetWidth + 20; // 画像幅 + margin
+  track.style.transform = `translateX(-${currentIndex * width}px)`;
+
+  dots.forEach(dot => dot.classList.remove('active'));
+  dots[currentIndex].classList.add('active');
 }
 
-prevBtn.addEventListener("click", () => {
-  currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+document.querySelector('.slider-btn.next').addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % track.children.length;
   updateSlider();
 });
 
-nextBtn.addEventListener("click", () => {
-  currentIndex = (currentIndex + 1) % slides.length;
+document.querySelector('.slider-btn.prev').addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + track.children.length) % track.children.length;
   updateSlider();
+});
+
+dots.forEach((dot, index) => {
+  dot.addEventListener('click', () => {
+    currentIndex = index;
+    updateSlider();
+  });
 });
