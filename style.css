@@ -127,14 +127,37 @@ body{
   line-height: 1.6;
   font-family: "Noto Serif JP", serif; /* 和っぽくて上品なフォント */
   color: #2a1a0f; /* ウイスキーの樽っぽい深いブラウン */
+  transform: translateY(-12px); 
 }
 
 /* ===== 作品スライダー ===== */
 .works-slider {
+  /* 半透明の白い背景を設定（ほぼ透明だが少しだけ明るさを与える） */
+  background: rgba(255, 0, 0, 0);
+
+  /* 作品スライダー用の相対位置コンテナ（子要素の絶対配置に使える） */
   position: relative;
-  width: 40%;       /* 左側のスペースに収まるように */
-  margin: 5% 0 0 5%;
+
+  /* 横幅と高さを指定できるようにする（必要に応じてpx, %, vh, vwを使用） */
+  width: 45%;          /* デフォルト値 */
+  height: 340px;       /* デフォルト値：任意に調整可能 */
+
+  /* 外側余白：上2%、下0、右0、左0 */
+  margin: 2% 2% 0 0;
+
+  /* 要素の中身がはみ出した場合は非表示にする（スライド切り替え時の見切れ防止） */
   overflow: hidden;
+
+  /* 全体を上に30px移動（位置調整のための補正） */
+  transform: translateY(-30px);
+
+  max-width: 900px;        /* 最大幅を制限 */
+  height: 340px;           /* 高さを指定（画像やボタンの基準になる） */
+  display: flex;
+  align-items: center;     /* 縦方向の中央揃え */
+  justify-content: left; /* 横方向の中央揃え */
+  overflow: hidden;
+  border-radius: 12px;
 }
 
 .slider-track {
@@ -143,28 +166,33 @@ body{
 }
 
 .slide {
-  min-width: 100%; /* 1画面に1つ表示 */
-  box-sizing: border-box;
-  padding: 1rem;
-  text-align: center;
+  flex: 0 0 100%;          /* 1画面に1枚表示 */
+  display: flex;
+  align-items: center;     /* 縦方向中央 */
+  justify-content: center; /* 横方向中央 */
 }
 
 .slide img {
-  width: 100%;
+  max-width: 95%;          /* 横幅は最大95% */
+  max-height: 95%;         /* 高さも枠内に収める */
+  object-fit: contain;     /* アスペクト比を維持 */
+  display: block;
+  margin: 0 auto;
   border-radius: 10px;
 }
 
 .slider-btn {
   position: absolute;
-  top: 50%;
+  top: 50%;                /* 縦方向の中央 */
   transform: translateY(-50%);
-  background: rgba(255,255,255,0.7);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
   border: none;
   font-size: 2rem;
+  padding: 0.5em 0.7em;
   cursor: pointer;
-  padding: 0.3em 0.6em;
   border-radius: 50%;
-  z-index: 10;  /* これを追加 */
+  z-index: 10;
 }
 
 .slider-btn.prev { left: -2rem; }
@@ -174,16 +202,18 @@ body{
 /* ===== Hero セクション ===== */
 .hero{
   position: relative;
-  min-height: 100vh; /* 全画面分確保 */
-  display:flex;
-  align-items:center
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: flex-start; /* 上寄せ */
+  transform: translateY(-10px); /* 上に移動 */
 }
 
 
 
 .hero-name-image {
   position: absolute;
-  top: -20%;        /* 少し上に配置（調整可） */
+  top: -225%;        /* 少し上に配置（調整可） */
   right: 5%;       /* 右寄せ */
   width: 380px;    /* 画像サイズ（調整可） */
   opacity: 1;
@@ -193,10 +223,19 @@ body{
 
 
 .hero-inner{
-  background: rgba(255,255,255,0.02);
-  padding:36px;
-  border-radius:12px;
-  backdrop-filter: blur(4px)
+  /* 半透明の白い背景を設定（ほぼ透明だが少しだけ明るさを与える） */
+  background: rgba(255, 255, 255, 0.02);
+
+  /* 内側の余白を確保（テキストやボタンが枠に近づきすぎないようにする） */
+  padding: 3px;
+
+  height: auto;
+
+  /* 角を丸める（柔らかい印象を演出） */
+  border-radius: 6px;
+
+  /* 背景をぼかすフィルター（ガラスのような質感：ガラスモーフィズム風） */
+  backdrop-filter: blur(4px);
 }
 
 h1{
@@ -210,7 +249,7 @@ h1{
 
 .hero-sub{
   color:rgba(27, 19, 19, 0.92);
-  margin-bottom:12px
+  margin-bottom:10px
 }
 /* ボタン */
 .btn{
