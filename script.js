@@ -445,3 +445,24 @@ window.addEventListener("scroll", () => {
 
   img.style.opacity = opacity;
 });
+
+const track = document.querySelector(".slider-track");
+const slides = document.querySelectorAll(".slide");
+const prevBtn = document.querySelector(".slider-btn.prev");
+const nextBtn = document.querySelector(".slider-btn.next");
+
+let currentIndex = 0;
+
+function updateSlider() {
+  track.style.transform = `translateX(-${currentIndex * 100}%)`;
+}
+
+prevBtn.addEventListener("click", () => {
+  currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+  updateSlider();
+});
+
+nextBtn.addEventListener("click", () => {
+  currentIndex = (currentIndex + 1) % slides.length;
+  updateSlider();
+});
