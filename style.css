@@ -2,8 +2,8 @@
 :root{
   /* カラーテーマと共通変数 */
   --bg-top: #fff9e6;   /* 上部背景色 */
-  --bg-mid: #f5c84c;   /* 中央背景色 */
-  --bg-btm: #d69600;   /* 下部背景色 */
+  --bg-mid: #fff69489;   /* 中央背景色 */
+  --bg-btm: #fff9e6;   /* 下部背景色 */
   --text: #290000;     /* 文字色 */
   --muted: #5b4a2f;    /* 補助テキスト色 */
   --accent: #ffd45d;   /* 強調色 */
@@ -43,9 +43,9 @@ body{
   inset: 0;
   z-index: -3; /* 一番奥に配置 */
   background: radial-gradient(circle at 50% 12%,
-    #ffe297 0%,
-    #f5c84c 55%,
-    #ffd470 100%);
+    #fff9e6 0%,
+    #fff589af 55%,
+    #fff9e6 100%);
   background-attachment: fixed;
   pointer-events: none; /* クリックなど無効化 */
 }
@@ -54,7 +54,7 @@ body{
 .ice {
   position: fixed;
   background: url("texture/ice.png") no-repeat center/cover;
-  opacity: 0.22;
+  opacity: 0.4;
   mix-blend-mode: screen;
   backdrop-filter: blur(4px);
   border-radius: 14px;
@@ -66,10 +66,10 @@ body{
 
 /* 泡キャンバス */
 #bubbles {
-  position: fixed;
-  inset: 0;
-  z-index: -1; /* 氷より手前に表示 */
-  pointer-events: none;
+  position: fixed;       /* 画面に固定配置（スクロールしても動かない） */
+  inset: 0;              /* top/right/bottom/left 全て0 → 画面全体を覆う */
+  z-index: -1;           /* 氷(.ice)より手前、その他コンテンツより奥に配置 */
+  pointer-events: none;  /* マウス操作を無効化してクリック等を邪魔しない */
 }
 
 /* ===== ヘッダー / ナビゲーション ===== */
@@ -109,7 +109,7 @@ body{
 }
 .nav-list a:hover{
   background:var(--glass);
-  color:#fff;
+  color:#391a0b;
 }
 
 /* コンテンツコンテナ */
@@ -437,10 +437,17 @@ h2{
 .bubble {
   position: absolute;
   bottom: -50px;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 228, 90, 0.679);
   border-radius: 50%;
   opacity: 0.8;
   animation: rise linear forwards;
+
+  /* --- 追加部分 --- */
+  /* 外側の柔らかい影 */
+  /*box-shadow: 0 4px 10px rgba(0,0,0,0.25);*/
+
+  /* 輪郭っぽい処理（白い縁取り） */
+  outline: 1px solid rgba(244, 209, 34, 0.375);
 }
 
 @keyframes rise {
