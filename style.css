@@ -64,6 +64,18 @@ body{
   transform-origin: center center;
 }
 
+/* 疑似要素で縁取りを作る */
+.ice::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit; /* 同じテクスチャを再利用 */
+  border-radius: inherit;
+  filter: drop-shadow(0 0 3px rgb(156, 156, 156)) drop-shadow(0 0 6px rgb(113, 113, 113));
+  opacity: 1; /* 縁は透過しない */
+  z-index: -1; /* 本体より奥に配置 */
+}
+
 /* 泡キャンバス */
 #bubbles {
   position: fixed;       /* 画面に固定配置（スクロールしても動かない） */
@@ -447,7 +459,7 @@ h2{
   /*box-shadow: 0 4px 10px rgba(0,0,0,0.25);*/
 
   /* 輪郭っぽい処理（白い縁取り） */
-  outline: 1px solid rgba(244, 209, 34, 0.375);
+  outline: 1px solid rgba(147, 127, 28, 0.245);
 }
 
 @keyframes rise {

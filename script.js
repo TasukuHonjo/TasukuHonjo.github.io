@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const NUM_BUBBLES = 40;     // 常に維持する泡の数
   const rand = (a, b) => Math.random() * (b - a) + a;
 
-  function createBubble(x = rand(0, w), y = rand(0, h), r = rand(4, 12)) {
+  function createBubble(x = rand(0, w), y = rand(0, h), r = rand(4, 8)) {
   return {
     x,
     y,
@@ -105,6 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 }
 
+// ===== 泡のグラデーション設定を調整しやすくする =====
+const GRADIENT_OFFSET_X = -0.3; // 中心Xオフセット（半径に対する割合）
+const GRADIENT_OFFSET_Y = -0.3; // 中心Yオフセット（半径に対する割合）
+const GRADIENT_INNER_RADIUS = 0.1; // 内側の半径（rに対する割合）
+const GRADIENT_OUTER_RADIUS = 1.0; // 外側の半径（rに対する割合）
 
   function draw() {
   ctx.clearRect(0, 0, w, h);
@@ -112,16 +117,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (b.opacity <= 0) continue;
     const alpha = b.opacity;
     const grad = ctx.createRadialGradient(
-      b.x - b.r * 0.3,
-      b.y - b.r * 0.3,
-      b.r * 0.1,
-      b.x,
-      b.y,
-      b.r
-    );
-    grad.addColorStop(0, `rgba(255,255,255,${0.9 * alpha})`);
-    grad.addColorStop(0.6, `rgba(235,245,250,${0.4 * alpha})`);
-    grad.addColorStop(1, `rgba(200,220,230,${0.08 * alpha})`);
+    b.x + b.r * GRADIENT_OFFSET_X,  // 内側中心X
+    b.y + b.r * GRADIENT_OFFSET_Y,  // 内側中心Y
+    b.r * GRADIENT_INNER_RADIUS,    // 内側半径
+    b.x,                            // 外側中心X
+    b.y,                            // 外側中心Y
+    b.r * GRADIENT_OUTER_RADIUS     // 外側半径
+  );
+    grad.addColorStop(0, `rgba(255,228,90,${0.08 * alpha})`);
+    grad.addColorStop(0.6, `rgba(255,228,90,${0.3 * alpha})`);
+    grad.addColorStop(1, `rgba(255,228,90,${0.75 * alpha})`);
 
     ctx.beginPath();
     ctx.fillStyle = grad;
