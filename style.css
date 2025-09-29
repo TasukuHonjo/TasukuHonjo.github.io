@@ -206,16 +206,16 @@ body{
   flex-direction: column;
   align-items: left;
   justify-content: flex-start; /* 上寄せ */
-  transform: translateY(-10px); /* 上に移動 */
+  transform: translateY(-30x); /* 上に移動 */
 }
 
 
 
 .hero-name-image {
   position: absolute;
-  top: -225%;        /* 少し上に配置（調整可） */
-  right: 5%;       /* 右寄せ */
-  width: 380px;    /* 画像サイズ（調整可） */
+  top: -280%;        /* 少し上に配置（調整可） */
+  right: 0%;       /* 右寄せ */
+  width: 450px;    /* 画像サイズ（調整可） */
   opacity: 1;
   transition: opacity 0.8s ease-out;
   pointer-events: none; /* マウス操作を邪魔しない */
@@ -224,7 +224,7 @@ body{
 
 .hero-inner{
   /* 半透明の白い背景を設定（ほぼ透明だが少しだけ明るさを与える） */
-  background: rgba(255, 255, 255, 0.02);
+  background: rgb(255, 255, 255,0.02);
 
   /* 内側の余白を確保（テキストやボタンが枠に近づきすぎないようにする） */
   padding: 3px;
@@ -247,9 +247,10 @@ h1{
 
 
 
+
 .hero-sub{
   color:rgba(27, 19, 19, 0.92);
-  margin-bottom:10px
+  margin-bottom:0px
 }
 /* ボタン */
 .btn{
