@@ -434,3 +434,14 @@ document.addEventListener("DOMContentLoaded", () => {
 })();
 
 
+window.addEventListener("scroll", () => {
+  const img = document.querySelector(".hero-name-image");
+  const scrollY = window.scrollY;
+  const fadeStart = 0;            // ページ先頭から
+  const fadeEnd = window.innerHeight * 0.6; // 画面高さの6割くらいで消える
+
+  let opacity = 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart);
+  opacity = Math.max(0, Math.min(1, opacity));
+
+  img.style.opacity = opacity;
+});

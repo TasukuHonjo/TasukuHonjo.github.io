@@ -133,10 +133,25 @@ body{
 
 /* ===== Hero セクション ===== */
 .hero{
-  min-height:60vh;
+  position: relative;
+  min-height: 100vh; /* 全画面分確保 */
   display:flex;
   align-items:center
 }
+
+
+
+.hero-name-image {
+  position: absolute;
+  top: -20%;        /* 少し上に配置（調整可） */
+  right: 5%;       /* 右寄せ */
+  width: 380px;    /* 画像サイズ（調整可） */
+  opacity: 1;
+  transition: opacity 0.8s ease-out;
+  pointer-events: none; /* マウス操作を邪魔しない */
+}
+
+
 .hero-inner{
   background: rgba(255,255,255,0.02);
   padding:36px;
